@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct ProgressTrackerApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,7 +27,7 @@ struct ProgressTrackerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            delegate.builder.build()
         }
         .modelContainer(sharedModelContainer)
     }

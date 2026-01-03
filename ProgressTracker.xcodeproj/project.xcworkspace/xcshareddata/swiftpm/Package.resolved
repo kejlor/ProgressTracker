@@ -1,0 +1,15 @@
+{
+  "originHash" : "6c6fa4f42bfc95ebd1948d0528d8af263629db5784dd9224d45c00e150666afc",
+  "pins" : [
+    {
+      "identity" : "customrouting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kejlor/CustomRouting",
+      "state" : {
+        "revision" : "6110ff9f0fc3ac72f7e8b95b5e8efae9035536e9",
+        "version" : "2.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

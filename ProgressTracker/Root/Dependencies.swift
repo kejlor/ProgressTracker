@@ -17,3 +17,14 @@ struct Dependencies {
         self.container = container
     }
 }
+
+@MainActor
+class DevPreview {
+    static let shared = DevPreview()
+    
+    var container: DependencyContainer {
+        let container = DependencyContainer()
+        
+        return container
+    }
+}

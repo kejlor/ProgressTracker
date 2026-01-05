@@ -3,7 +3,7 @@ import SwiftUI
 struct HabitProps {
     var selectedColor: Color = .blue
     var days: Int = 0
-    var name: String = "Meditate"
+    var name: String = "Programming"
 }
 
 struct HabitView: View {
@@ -16,23 +16,15 @@ struct HabitView: View {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack {
-                            Text("\(props.days)")
+                            Text(props.name)
                                 .font(.title)
                                 .fontWeight(.bold)
-                            
-                            Image(systemName: "flame.fill")
-                                .font(.title3)
-                                .foregroundStyle(props.selectedColor)
                         }
-                        
-                        Text("Days")
-                            .font(.body)
-                            .fontWeight(.thin)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Button {
-                        // TODO: Mutate days from props
+                        // TODO: Mutate habit progress
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable()
@@ -40,19 +32,54 @@ struct HabitView: View {
                             .frame(width: 30, height: 30)
                     }
                 }
+                
+                HStack {
+                    Text("Days")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
+                    Text("\(props.days)")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
+                    Image(systemName: "flame.fill")
+                        .font(.title3)
+                        .foregroundStyle(props.selectedColor)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            Text(props.name)
-                .font(.title3)
-                .fontWeight(.bold)
-                .padding(.top, 15)
-            
-            // TODO: Add calendar widget here
+            HStack(alignment: .bottom) {
+                HStack {
+                    ForEach(Date.capitalizedFirstLettersOfWeekdays, id: \.self) { day in
+                        dayOfTheWeek(day: day)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text("7 out of 7")
+            }
         }
         .padding(10)
         .background {
             RoundedRectangle(cornerRadius: 10)
                 .fill(props.selectedColor.opacity(0.2))
+        }
+    }
+}
+
+extension HabitView {
+    private func dayOfTheWeek(
+        day: String,
+        isCompleted: Bool = false
+    ) -> some View {
+        VStack {
+            Text(day)
+            RoundedRectangle(cornerRadius: 4)
+                .fill(props.selectedColor)
+//                .fill(isCompleted ? props.selectedColor : .white)
+//                    .stroke(props.selectedColor, lineWidth: 1)
+                .frame(width: 15, height: 15)
         }
     }
 }

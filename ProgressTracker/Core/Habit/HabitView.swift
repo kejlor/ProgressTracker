@@ -12,52 +12,43 @@ struct HabitView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack(spacing: 0) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack {
-                            Text(props.name)
-                                .font(.title)
-                                .fontWeight(.bold)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Button {
-                        // TODO: Mutate habit progress
-                    } label: {
-                        Image(systemName: "checkmark.circle.fill")
-                            .resizable()
+            HStack(alignment: .top) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("\(props.days)")
+                            .font(.title)
+                            .fontWeight(.bold)
+                        
+                        Image(systemName: "flame.fill")
                             .foregroundStyle(props.selectedColor)
-                            .frame(width: 30, height: 30)
                     }
+                    
+                    Text("DAYS")
+                        .font(.footnote)
+                        .foregroundStyle(.gray)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 
-                HStack {
-                    Text("Days")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    
-                    Text("\(props.days)")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    
-                    Image(systemName: "flame.fill")
-                        .font(.title3)
+                Button {
+                    // TODO: Mutate habit progress
+                } label: {
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
                         .foregroundStyle(props.selectedColor)
+                        .frame(width: 25, height: 25)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .padding(.bottom, 20)
             
-            HStack(alignment: .bottom) {
-                HStack {
-                    ForEach(Date.capitalizedFirstLettersOfWeekdays, id: \.self) { day in
-                        dayOfTheWeek(day: day)
-                    }
+            Text(props.name)
+                .font(.footnote)
+                .fontWeight(.bold)
+                .padding(.bottom, 10)
+            
+            HStack {
+                ForEach(Date.capitalizedFirstLettersOfWeekdays, id: \.self) { day in
+                    dayOfTheWeek(day: day)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Text("7 out of 7")
             }
         }
         .padding(10)
@@ -75,16 +66,15 @@ extension HabitView {
     ) -> some View {
         VStack {
             Text(day)
+                .font(.caption)
             RoundedRectangle(cornerRadius: 4)
                 .fill(props.selectedColor)
-//                .fill(isCompleted ? props.selectedColor : .white)
-//                    .stroke(props.selectedColor, lineWidth: 1)
                 .frame(width: 15, height: 15)
         }
     }
 }
 
-#Preview {
+#Preview("Single habit") {
     let container = DevPreview.shared.container
     let builder = CoreBuilder(interactor: CoreInteractor(container: container))
     let props = HabitProps()
@@ -94,5 +84,24 @@ extension HabitView {
             router: router,
             props: props
         )
+    }
+}
+
+#Preview("Two habits") {
+    let container = DevPreview.shared.container
+    let builder = CoreBuilder(interactor: CoreInteractor(container: container))
+    let props = HabitProps()
+    
+    return RouterView { router in
+        HStack {
+            builder.createHabitView(
+                router: router,
+                props: props
+            )
+            builder.createHabitView(
+                router: router,
+                props: props
+            )
+        }
     }
 }

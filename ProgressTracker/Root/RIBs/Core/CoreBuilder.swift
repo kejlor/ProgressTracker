@@ -5,8 +5,12 @@ struct CoreBuilder: Builder {
     let interactor: CoreInteractor
     
     func build() -> AnyView {
-        Text("Welcome in Progress Tracker")
-            .any()
+//        Text("Welcome in Progress Tracker")
+//            .any()
+        RouterView { router in
+            habitsView(router: router)
+        }
+        .any()
     }
     
     func createHabitView(
@@ -25,5 +29,27 @@ struct CoreBuilder: Builder {
                 props: props
             )
         }
+    }
+    
+    func habitsView(router: Router) -> some View {
+        HabitsView(
+            presenter: HabitsPresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            habitView: { props in
+                createHabitView(router: router, props: props)
+            }
+        )
+    }
+    
+    func habitDetailsView(router: Router, props: HabitProps) -> some View {
+        HabitDetailsView(
+            presenter: HabitDetailsPresenter(
+                interactor: interactor,
+                router: CoreRouter(router: router, builder: self)
+            ),
+            props: props
+        )
     }
 }

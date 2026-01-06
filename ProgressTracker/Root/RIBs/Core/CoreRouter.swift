@@ -9,4 +9,16 @@ typealias AlertType = CustomRouting.AlertType
 struct CoreRouter: GlobalRouter {
     let router: Router
     let builder: CoreBuilder
+    
+    func showHabitsView() {
+        router.showScreen(.push) { router in
+            builder.habitsView(router: router)
+        }
+    }
+    
+    func showHabitDetailsView(props: HabitProps) {
+        router.showScreen(.push) { router in
+            builder.habitDetailsView(router: router, props: props)
+        }
+    }
 }

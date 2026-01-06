@@ -1,6 +1,7 @@
 import SwiftUI
 
-struct HabitProps {
+struct HabitProps: Identifiable {
+    var id: String = UUID().uuidString
     var selectedColor: Color = .blue
     var days: Int = 0
     var name: String = "Programming"

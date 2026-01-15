@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HabitsView<HabitView: View>: View {
     @State var presenter: HabitsPresenter
-    @ViewBuilder var habitView: (HabitProps) -> HabitView
+    @ViewBuilder var habitView: (HabitModel) -> HabitView
     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     
     var body: some View {
@@ -10,7 +10,7 @@ struct HabitsView<HabitView: View>: View {
             Text("Add your first habit!")
         } else {
             LazyVGrid(columns: columns) {
-                ForEach(presenter.habits) { habit in
+                ForEach(presenter.habits, id: \.habitId) { habit in
                     habitView(habit)
                         .anyButton(action: {
                             presenter.onHabitPressed(habit: habit)

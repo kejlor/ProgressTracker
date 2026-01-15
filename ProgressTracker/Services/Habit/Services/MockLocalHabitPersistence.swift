@@ -1,0 +1,22 @@
+//
+//  MockLocalHabitPersistence.swift
+//  ProgressTracker
+//
+//  Created by Bartosz Wojtkowiak on 15/01/2026.
+//
+
+struct MockLocalHabitPersistence: LocalHabitPersistence {
+    let habits: [HabitModel]
+    
+    init(habits: [HabitModel] = HabitModel.mocks) {
+        self.habits = habits
+    }
+    
+    func addHabit(habit: HabitModel) throws {
+        
+    }
+    
+    func getHabits() throws -> [HabitModel] {
+        habits
+    }
+}

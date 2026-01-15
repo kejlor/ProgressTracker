@@ -15,7 +15,7 @@ struct CoreBuilder: Builder {
     
     func createHabitView(
         router: Router,
-        props: HabitProps
+        habit: HabitModel
     ) -> some View {
         RouterView { router in
             HabitView(
@@ -26,7 +26,7 @@ struct CoreBuilder: Builder {
                         builder: self
                     )
                 ),
-                props: props
+                habit: habit
             )
         }
     }
@@ -37,19 +37,19 @@ struct CoreBuilder: Builder {
                 interactor: interactor,
                 router: CoreRouter(router: router, builder: self)
             ),
-            habitView: { props in
-                createHabitView(router: router, props: props)
+            habitView: { habit in
+                createHabitView(router: router, habit: habit)
             }
         )
     }
     
-    func habitDetailsView(router: Router, props: HabitProps) -> some View {
+    func habitDetailsView(router: Router, habit: HabitModel) -> some View {
         HabitDetailsView(
             presenter: HabitDetailsPresenter(
                 interactor: interactor,
                 router: CoreRouter(router: router, builder: self)
             ),
-            props: props
+            habit: habit
         )
     }
 }

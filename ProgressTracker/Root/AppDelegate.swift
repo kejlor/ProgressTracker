@@ -15,10 +15,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        let dependencies = Dependencies()
+        dependencies = Dependencies()
         builder = CoreBuilder(
             interactor: CoreInteractor(
-                container: dependencies.container
+                container: self.dependencies.container
             )
         )
         return true

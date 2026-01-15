@@ -16,9 +16,9 @@ struct CoreRouter: GlobalRouter {
         }
     }
     
-    func showHabitDetailsView(props: HabitProps) {
+    func showHabitDetailsView(habit: HabitModel) {
         router.showScreen(.push) { router in
-            builder.habitDetailsView(router: router, props: props)
+            builder.habitDetailsView(router: router, habit: habit)
         }
     }
 }

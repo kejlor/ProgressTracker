@@ -6,13 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @MainActor
-struct Dependencies {
+@Observable
+class Dependencies {
     let container: DependencyContainer
     
     init() {
+//        let localHabitService = SwiftDataLocalHabitPersistence()
+        let localHabitService = MockLocalHabitPersistence()
+        
         let container = DependencyContainer()
+        container.register(LocalHabitPersistence.self, service: localHabitService)
         
         self.container = container
     }

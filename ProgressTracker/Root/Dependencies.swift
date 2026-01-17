@@ -30,7 +30,14 @@ class DevPreview {
     
     var container: DependencyContainer {
         let container = DependencyContainer()
+        container.register(LocalHabitPersistence.self, service: localHabitService)
         
         return container
+    }
+    
+    let localHabitService: MockLocalHabitPersistence
+    
+    init() {
+        self.localHabitService = MockLocalHabitPersistence()
     }
 }

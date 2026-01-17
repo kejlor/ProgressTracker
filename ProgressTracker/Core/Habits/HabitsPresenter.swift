@@ -19,9 +19,11 @@ class HabitsPresenter {
     }
     
     func onHabitPressed(habit: HabitModel) {
-        // TODO: Add constant initialization for HabitProps, pass it to router
-        print("debugs: habit has been pressed")
         router.showHabitDetailsView(habit: habit)
+    }
+    
+    func onAddHabitPressed() {
+        router.showAddHabitView()
     }
     
     func addHabit(habit: HabitModel) {

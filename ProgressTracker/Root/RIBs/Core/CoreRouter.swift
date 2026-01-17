@@ -16,9 +16,16 @@ struct CoreRouter: GlobalRouter {
         }
     }
     
+    // TODO: Fix issues with navigation
     func showHabitDetailsView(habit: HabitModel) {
         router.showScreen(.push) { router in
             builder.habitDetailsView(router: router, habit: habit)
+        }
+    }
+    
+    func showAddHabitView() {
+        router.showScreen(.sheet) { router in
+            builder.createHabitView(router: router)
         }
     }
 }

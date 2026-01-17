@@ -5,51 +5,78 @@ struct HabitView: View {
     let habit: HabitModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("\(habit.days)")
-                            .font(.title)
-                            .fontWeight(.bold)
-                        
-                        Image(systemName: "flame.fill")
-                            .foregroundStyle(habit.habitColorCalculated)
-                    }
-                    
-                    Text("DAYS")
-                        .font(.footnote)
-                        .foregroundStyle(.gray)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Button {
-                    // TODO: Mutate habit progress
-                } label: {
-                    Image(systemName: "checkmark.circle.fill")
-                        .resizable()
-                        .foregroundStyle(habit.habitColorCalculated)
-                        .frame(width: 25, height: 25)
-                }
+        HStack(alignment: .top, spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                habitTitle
+                daysSection
+                completedTodaySection
+                currentWeekProgressSection
             }
-            .padding(.bottom, 20)
-            
-            Text(habit.name)
-                .font(.footnote)
-                .fontWeight(.bold)
-                .padding(.bottom, 10)
-            
-            // MARK: This code is causing issues with repeated id for each day
-            HStack {
-//                ForEach(Date.capitalizedFirstLettersOfWeekdays, id: \.self) { day in
-//                    dayOfTheWeek(day: day)
-//                }
-            }
+            completeButton
         }
-        .padding(10)
+        .padding(15)
         .background {
             RoundedRectangle(cornerRadius: 10)
                 .foregroundStyle(habit.habitColorCalculated.opacity(0.2))
+        }
+    }
+}
+
+private extension HabitView {
+    private var habitTitle: some View {
+        Text(habit.name)
+            .font(.title)
+            .fontWeight(.bold)
+            .minimumScaleFactor(0.5)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var completeButton: some View {
+        Button {
+            // TODO: Mutate habit progress
+            // TODO: Hide this button, change foreground style of completed today component
+        } label: {
+            VStack {
+                Image(systemName: "checkmark.square.fill")
+                    .resizable()
+                    .frame(width: 35, height: 35)
+                    .foregroundStyle(habit.habitColorCalculated)
+            }
+            .foregroundStyle(habit.habitColorCalculated)
+
+        }
+    }
+    
+    private var daysSection: some View {
+        HStack {
+            Text("\(habit.days)")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            Text("DAYS")
+                .font(.body)
+                .foregroundStyle(.gray)
+        }
+    }
+    
+    private var completedTodaySection: some View {
+        HStack {
+            Text("Completed today")
+            
+            Image(systemName: "checkmark.square.fill")
+                .resizable()
+                .frame(width: 15, height: 15)
+                .foregroundStyle(habit.habitColorCalculated)
+        }
+    }
+    
+    // MARK: This code is causing issues with repeated id for each day
+    private var currentWeekProgressSection: some View {
+        HStack {
+//            ForEach(Date.capitalizedFirstLettersOfWeekdays, id: \.self) { day in
+//                dayOfTheWeek(day: day)
+//            }
         }
     }
 }

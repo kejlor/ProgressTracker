@@ -5,7 +5,7 @@
 //  Created by Bartosz Wojtkowiak on 15/01/2026.
 //
 
-import Foundation
+import SwiftUI
 
 struct HabitModel: Hashable, Codable {
     var id: String {
@@ -13,23 +13,27 @@ struct HabitModel: Hashable, Codable {
     }
     
     let habitId: String
-    let selectedColor: String
+    let habitColorHex: String
     private(set) var days: Int
     private(set) var name: String
     let dateCreated: Date?
     
     init(
         habitId: String,
-        selectedColor: String,
+        habitColorHex: String,
         days: Int,
         name: String,
         dateCreated: Date? = nil
     ) {
         self.habitId = habitId
-        self.selectedColor = selectedColor
+        self.habitColorHex = habitColorHex
         self.days = days
         self.name = name
         self.dateCreated = dateCreated
+    }
+    
+    var habitColorCalculated: Color {
+        Color(hex: habitColorHex)
     }
     
     mutating func updateName(name: String) {
@@ -41,13 +45,13 @@ struct HabitModel: Hashable, Codable {
     }
     
     static func newHabit(
-        selectedColor: String,
+        habitColorHex: String,
         days: Int,
         name: String
     ) -> Self {
         HabitModel(
             habitId: UUID().uuidString,
-            selectedColor: selectedColor,
+            habitColorHex: habitColorHex,
             days: days,
             name: name,
             dateCreated: .now
@@ -62,21 +66,21 @@ struct HabitModel: Hashable, Codable {
         [
             HabitModel(
                 habitId: UUID().uuidString,
-                selectedColor: "#87CEEB",
+                habitColorHex: "#87CEEB",
                 days: 123,
                 name: "Drawing",
                 dateCreated: .now
             ),
             HabitModel(
                 habitId: UUID().uuidString,
-                selectedColor: "#EE4B2B",
+                habitColorHex: "#EE4B2B",
                 days: 456,
                 name: "Programming",
                 dateCreated: .now
             ),
             HabitModel(
                 habitId: UUID().uuidString,
-                selectedColor: "#228B22",
+                habitColorHex: "#228B22",
                 days: 789,
                 name: "Gym",
                 dateCreated: .now

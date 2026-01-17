@@ -11,14 +11,14 @@ import SwiftData
 @Model
 class HabitEntity {
     @Attribute(.unique) var habitId: String
-    var selectedColor: String
+    var habitColorHex: String
     var days: Int
     var name: String
     var dateAdded: Date
     
     init(from model: HabitModel) {
         self.habitId = model.habitId
-        self.selectedColor = model.selectedColor
+        self.habitColorHex = model.habitColorHex
         self.days = model.days
         self.name = model.name
         self.dateAdded = .now
@@ -27,7 +27,7 @@ class HabitEntity {
     func toModel() -> HabitModel {
         HabitModel(
             habitId: habitId,
-            selectedColor: selectedColor,
+            habitColorHex: habitColorHex,
             days: days,
             name: name
         )

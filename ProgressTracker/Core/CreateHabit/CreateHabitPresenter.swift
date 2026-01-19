@@ -7,8 +7,9 @@ class CreateHabitPresenter {
     private let router: CreateHabitRouter
     
     private(set) var selectedColor: Color?
-    private(set) var name: String?
+    
     let profileColors: [Color] = [.red, .green, .orange, .blue, .mint, .purple, .cyan, .teal, .indigo]
+    var habitNameText: String = ""
     
     init(
         interactor: CreateHabitInteractor,
@@ -23,7 +24,21 @@ class CreateHabitPresenter {
     }
     
     func onAddPressed() {
-        guard let selectedColor, let name else { return }
-        // TODO: Add habit to SwiftData
+        guard let selectedColor else { return }
+        
+        let habit = HabitModel(
+            habitId: UUID().uuidString,
+            habitColorHex: selectedColor.asHex(),
+            days: 0,
+            name: habitNameText
+        )
+        
+        do {
+            try interactor.addHabit(habit: habit)
+            router.dismissScreen()
+            // MARK: Refresh data on HabitsView
+        } catch {
+            print("Caught error while adding habit")
+        }
     }
 }

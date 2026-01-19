@@ -5,8 +5,9 @@ struct CreateHabitView: View {
     
     var body: some View {
         ScrollView {
+            textFieldSection
             colorGrid
-            .padding(.horizontal, 24)
+                .padding(.horizontal, 24)
         }
         .safeAreaInset(
             edge: .bottom,
@@ -16,7 +17,7 @@ struct CreateHabitView: View {
                 ZStack {
                     if let selectedColor = presenter.selectedColor {
                         ctaButton(selectedColor: selectedColor)
-                        .transition(AnyTransition.move(edge: .bottom))
+                            .transition(AnyTransition.move(edge: .bottom))
                     }
                 }
                 .padding(24)
@@ -38,6 +39,13 @@ struct CreateHabitView: View {
 //        )
 //        .textFieldStyle(.plain)
 //    }
+    
+    private var textFieldSection: some View {
+        TextField("Enter habit name", text: $presenter.habitNameText)
+            .keyboardType(.alphabet)
+            .autocorrectionDisabled()
+            .accessibilityIdentifier("HabitTextField")
+    }
     
     private var colorGrid: some View {
         LazyVGrid(
@@ -73,10 +81,10 @@ struct CreateHabitView: View {
     
     private func ctaButton(selectedColor: Color) -> some View {
         Text("Continue")
-//            .callToActionButton()
-//            .anyButton(.press, action: {
-//                presenter.onContinuePressed()
-//            })
+            .callToActionButton()
+            .anyButton(action: {
+                presenter.onAddPressed()
+            })
             .accessibilityIdentifier("ContinueButton")
     }
 }

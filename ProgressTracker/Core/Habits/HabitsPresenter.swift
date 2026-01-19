@@ -26,14 +26,6 @@ class HabitsPresenter {
         router.showAddHabitView()
     }
     
-    func addHabit(habit: HabitModel) {
-        do {
-            try interactor.addHabit(habit: habit)
-        } catch {
-            print("Unable to add habit")
-        }
-    }
-    
     func getHabits() {
         do {
             habits = try interactor.getHabits()

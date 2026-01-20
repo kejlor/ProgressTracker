@@ -47,7 +47,8 @@ struct CoreBuilder: Builder {
         HabitDetailsView(
             presenter: HabitDetailsPresenter(
                 interactor: interactor,
-                router: CoreRouter(router: router, builder: self)
+                router: CoreRouter(router: router, builder: self),
+                habit: habit
             ),
             habit: habit
         )

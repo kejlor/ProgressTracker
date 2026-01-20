@@ -25,4 +25,8 @@ class HabitManager {
     func getHabits() throws -> [HabitModel] {
         try local.getHabits()
     }
+    
+    func removeHabit(habit: HabitModel) throws {
+        try local.removeHabit(habit: habit)
+    }
 }

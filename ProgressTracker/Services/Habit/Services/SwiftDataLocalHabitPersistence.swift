@@ -32,4 +32,8 @@ struct SwiftDataLocalHabitPersistence: LocalHabitPersistence {
         let entities = try mainContext.fetch(descriptor)
         return entities.map({ $0.toModel() })
     }
+    
+    func removeHabit(habit: HabitModel) throws {
+        mainContext.delete(HabitEntity(from: habit))
+    }
 }

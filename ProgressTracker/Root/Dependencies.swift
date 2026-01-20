@@ -14,8 +14,8 @@ class Dependencies {
     let container: DependencyContainer
     
     init() {
-//        let localHabitService = SwiftDataLocalHabitPersistence()
-        let localHabitService = MockLocalHabitPersistence()
+        let localHabitService = SwiftDataLocalHabitPersistence()
+//        let localHabitService = MockLocalHabitPersistence()
         
         let container = DependencyContainer()
         container.register(LocalHabitPersistence.self, service: localHabitService)

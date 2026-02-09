@@ -57,7 +57,7 @@ struct CreateHabitView: View {
                 Section(content: {
                     ForEach(presenter.profileColors, id: \.self) { color in
                         Circle()
-                        // TODO: Add unique accent color or thinka bout better idea of selecting color
+                        // TODO: Add unique accent color or think about better idea of selecting color
 //                            .fill(.accent)
                             .overlay(
                                 color

@@ -23,4 +23,8 @@ struct MockLocalHabitPersistence: LocalHabitPersistence {
     func removeHabit(habit: HabitModel) throws {
         
     }
+    
+    func updateHabit(habit: HabitModel) throws {
+        
+    }
 }

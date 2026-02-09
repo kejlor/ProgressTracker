@@ -5,7 +5,10 @@ struct HabitDetailsView: View {
     let habit: HabitModel
     
     var body: some View {
-        Text("Habit Details View")
+        VStack(spacing: 0) {
+            editHabitNameSection
+            deleteHabitButton
+        }
     }
 }
 
@@ -20,7 +23,21 @@ private extension HabitDetailsView {
         }
     }
     
+    private var saveHabitButton: some View {
+        Button {
+            presenter.onSavePressed()
+        } label: {
+            Text("Update habit")
+        }
+    }
     
+    private var deleteHabitButton: some View {
+        Button {
+            presenter.onDeletePressed()
+        } label: {
+            Text("Delete habit")
+        }
+    }
 }
 
 extension CoreBuilder {
@@ -34,9 +51,12 @@ extension CoreRouter {
 #Preview {
     let container = DevPreview.shared.container
     let builder = CoreBuilder(interactor: CoreInteractor(container: container))
-    let props = HabitProps()
     
     return RouterView { router in
-        builder.habitDetailsView(router: router, props: props)
+        builder
+            .habitDetailsView(
+                router: router,
+                habit: HabitModel.mock
+            )
     }
 }

@@ -3,7 +3,7 @@ import SwiftUI
 @MainActor
 protocol HabitsRouter {
     func showHabitDetailsView(habit: HabitModel)
-    func showAddHabitView()
+    func showAddHabitView(onDisappear: @escaping () -> Void)
 }
 
 extension CoreRouter: HabitsRouter { }

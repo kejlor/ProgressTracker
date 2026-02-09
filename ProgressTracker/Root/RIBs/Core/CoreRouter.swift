@@ -23,9 +23,10 @@ struct CoreRouter: GlobalRouter {
         }
     }
     
-    func showAddHabitView() {
+    func showAddHabitView(onDisappear: @escaping () -> Void) {
         router.showScreen(.sheet) { router in
             builder.createHabitView(router: router)
+                .onDisappear(perform: onDisappear)
         }
     }
 }

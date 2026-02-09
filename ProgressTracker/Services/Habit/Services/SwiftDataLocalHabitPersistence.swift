@@ -22,9 +22,7 @@ struct SwiftDataLocalHabitPersistence: LocalHabitPersistence {
     }
     
     func addHabit(habit: HabitModel) throws {
-        let entity = HabitEntity(from: habit)
-        mainContext.insert(entity)
-        try mainContext.save()
+        try insertHabit(habit: habit)
     }
     
     func getHabits() throws -> [HabitModel] {
@@ -34,6 +32,21 @@ struct SwiftDataLocalHabitPersistence: LocalHabitPersistence {
     }
     
     func removeHabit(habit: HabitModel) throws {
-        mainContext.delete(HabitEntity(from: habit))
+        let habitEntity = HabitEntity(from: habit)
+        let idToDelete = habitEntity.persistentModelID
+        try mainContext.delete(model: HabitEntity.self, where: #Predicate { user in
+            user.persistentModelID == idToDelete
+        })
+        try mainContext.save()
+    }
+    
+    func updateHabit(habit: HabitModel) throws {
+        try insertHabit(habit: habit)
+    }
+    
+    private func insertHabit(habit: HabitModel) throws {
+        let entity = HabitEntity(from: habit)
+        mainContext.insert(entity)
+        try mainContext.save()
     }
 }

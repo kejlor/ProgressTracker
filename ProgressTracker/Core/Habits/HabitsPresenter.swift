@@ -22,8 +22,8 @@ class HabitsPresenter {
         router.showHabitDetailsView(habit: habit)
     }
     
-    func onAddHabitPressed() {
-        router.showAddHabitView()
+    func onAddHabitPressed(onDisappear: @escaping () -> Void) {
+        router.showAddHabitView(onDisappear: onDisappear)
     }
     
     func getHabits() {

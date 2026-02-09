@@ -29,4 +29,8 @@ class HabitManager {
     func removeHabit(habit: HabitModel) throws {
         try local.removeHabit(habit: habit)
     }
+    
+    func updateHabit(habit: HabitModel) throws {
+        try local.addHabit(habit: habit)
+    }
 }

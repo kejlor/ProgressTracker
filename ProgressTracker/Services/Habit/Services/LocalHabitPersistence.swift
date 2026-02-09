@@ -10,4 +10,5 @@ protocol LocalHabitPersistence {
     func addHabit(habit: HabitModel) throws
     func getHabits() throws -> [HabitModel]
     func removeHabit(habit: HabitModel) throws
+    func updateHabit(habit: HabitModel) throws
 }

@@ -4,5 +4,4 @@ import SwiftUI
 struct RootRouter: GlobalRouter {
     let router: Router
     let builder: RootBuilder
-    
 }

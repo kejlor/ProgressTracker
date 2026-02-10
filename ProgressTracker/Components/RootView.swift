@@ -26,7 +26,6 @@ public struct RootDelegate {
 }
 
 public struct RootView: View {
-    
     let delegate: RootDelegate?
     let content: () -> any View
     

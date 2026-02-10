@@ -28,18 +28,6 @@ struct CreateHabitView: View {
         .toolbar(.hidden, for: .navigationBar)
     }
     
-//    private var nameTextfield: some View {
-//        TextField(
-//            "",
-//            text: $presenter.name,
-//            prompt:
-//                Text(textPlaceholder ?? "")
-//                    .foregroundColor(Style.BrandColor.elementLightMedium)
-//                    .font(.system(size: 16, weight: .regular))
-//        )
-//        .textFieldStyle(.plain)
-//    }
-    
     private var textFieldSection: some View {
         TextField("Enter habit name", text: $presenter.habitNameText)
             .keyboardType(.alphabet)

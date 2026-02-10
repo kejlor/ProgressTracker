@@ -36,7 +36,6 @@ class CreateHabitPresenter {
         do {
             try interactor.addHabit(habit: habit)
             router.dismissScreen()
-            // MARK: Refresh data on HabitsView
         } catch {
             print("Caught error while adding habit")
         }

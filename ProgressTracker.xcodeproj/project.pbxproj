@@ -33,9 +33,22 @@
 		4ED56BBB2F09113700DD2283 /* ProgressTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProgressTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4E41B0CF2F4365D2008600B5 /* Exceptions for "ProgressTracker" folder in "ProgressTracker" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4ED56BA12F09113600DD2283 /* ProgressTracker */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4ED56BA42F09113600DD2283 /* ProgressTracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4E41B0CF2F4365D2008600B5 /* Exceptions for "ProgressTracker" folder in "ProgressTracker" target */,
+			);
 			path = ProgressTracker;
 			sourceTree = "<group>";
 		};

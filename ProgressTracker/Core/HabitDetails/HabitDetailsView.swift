@@ -8,6 +8,7 @@ struct HabitDetailsView: View {
         VStack(spacing: 0) {
             editHabitNameSection
             deleteHabitButton
+            previousDates
         }
     }
 }
@@ -36,6 +37,32 @@ private extension HabitDetailsView {
             presenter.onDeletePressed()
         } label: {
             Text("Delete habit")
+        }
+    }
+    
+    private func dateListView(date: Date) -> some View {
+        HStack {
+            Text(presenter.formatDate(date: date))
+            
+            Button {
+                // TODO: Mark as completed
+            } label: {
+                Image(systemName: "checkmark.square.fill")
+                    .foregroundStyle(presenter.hasCompletedHabit(at: date) ? .green : .red)
+            }
+        }
+    }
+    
+    private var previousDates: some View {
+        List {
+            ForEach(presenter.previousDates, id: \.self) { previousDate in
+                dateListView(date: previousDate)
+                    .onAppear {
+                        if presenter.isLastDate(date: previousDate) {
+                            presenter.loadPreviousDates()
+                        }
+                    }
+            }
         }
     }
 }

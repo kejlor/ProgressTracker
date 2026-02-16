@@ -17,19 +17,22 @@ struct HabitModel: Hashable, Codable {
     private(set) var days: Int
     private(set) var name: String
     let dateCreated: Date?
+    let completedDates: [Date]?
     
     init(
         habitId: String,
         habitColorHex: String,
         days: Int,
         name: String,
-        dateCreated: Date? = nil
+        dateCreated: Date? = nil,
+        completedDates: [Date]? = nil
     ) {
         self.habitId = habitId
         self.habitColorHex = habitColorHex
         self.days = days
         self.name = name
         self.dateCreated = dateCreated
+        self.completedDates = completedDates
     }
     
     var habitColorCalculated: Color {

@@ -15,6 +15,7 @@ class HabitEntity {
     var days: Int
     var name: String
     var dateAdded: Date
+    var completedDates: [Date]?
     
     init(from model: HabitModel) {
         self.habitId = model.habitId
@@ -22,6 +23,7 @@ class HabitEntity {
         self.days = model.days
         self.name = model.name
         self.dateAdded = .now
+        self.completedDates = model.completedDates
     }
     
     func toModel() -> HabitModel {
@@ -29,7 +31,8 @@ class HabitEntity {
             habitId: habitId,
             habitColorHex: habitColorHex,
             days: days,
-            name: name
+            name: name,
+            completedDates: completedDates
         )
     }
 }

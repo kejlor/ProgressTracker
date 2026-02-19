@@ -8,19 +8,16 @@
 import Foundation
 
 extension Date {
-    static var firstDayOfWeek = Calendar.current.firstWeekday
-    
-    static var capitalizedFirstLettersOfWeekdays: [String] {
+    static var currentWeekDates: [Date] {
         let calendar = Calendar.current
-        var weekdays = calendar.veryShortWeekdaySymbols
-        if firstDayOfWeek > 1 {
-            for _ in 1..<firstDayOfWeek {
-                if let first = weekdays.first {
-                    weekdays.append(first)
-                    weekdays.removeFirst()
-                }
-            }
+        let today = Date()
+        
+        guard let weekInterval = calendar.dateInterval(of: .weekOfYear, for: today) else {
+            return []
         }
-        return weekdays.map { $0.capitalized }
+        
+        return (0..<7).compactMap {
+            calendar.date(byAdding: .day, value: $0, to: weekInterval.start)
+        }
     }
 }

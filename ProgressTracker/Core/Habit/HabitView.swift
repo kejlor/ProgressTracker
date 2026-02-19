@@ -36,16 +36,14 @@ private extension HabitView {
         Button {
             // TODO: Mutate habit progress
             // TODO: Hide this button, change foreground style of completed today component
+            print("debugs: pressed complete button")
         } label: {
-            VStack {
                 Image(systemName: "checkmark.square.fill")
                     .resizable()
                     .frame(width: 35, height: 35)
-                    .foregroundStyle(habit.habitColorCalculated)
-            }
-            .foregroundStyle(habit.habitColorCalculated)
-
         }
+        .foregroundStyle(habit.habitColorCalculated)
+        .buttonStyle(.plain)
     }
     
     private var daysSection: some View {
@@ -71,23 +69,21 @@ private extension HabitView {
         }
     }
     
-    // MARK: This code is causing issues with repeated id for each day
     private var currentWeekProgressSection: some View {
-        HStack {
-//            ForEach(Date.capitalizedFirstLettersOfWeekdays, id: \.self) { day in
-//                dayOfTheWeek(day: day)
-//            }
+        let weekDays = Date.currentWeekDates
+        
+        return HStack {
+            ForEach(weekDays, id: \.self) { date in
+                dayOfTheWeek(date: date)
+            }
         }
     }
 }
 
 extension HabitView {
-    private func dayOfTheWeek(
-        day: String,
-        isCompleted: Bool = false
-    ) -> some View {
+    private func dayOfTheWeek(date: Date) -> some View {
         VStack {
-            Text(day)
+            Text(presenter.formatDate(date))
                 .font(.caption)
             RoundedRectangle(cornerRadius: 4)
                 .fill(habit.habitColorCalculated)

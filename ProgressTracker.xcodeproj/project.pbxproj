@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4ED56DBD2F09139B00DD2283 /* CustomRouting in Frameworks */ = {isa = PBXBuildFile; productRef = 4ED56DBC2F09139B00DD2283 /* CustomRouting */; };
+		4E1BECFB2F4F4E5500EB660F /* NavigationKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4E1BECFA2F4F4E5500EB660F /* NavigationKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4ED56DBD2F09139B00DD2283 /* CustomRouting in Frameworks */,
+				4E1BECFB2F4F4E5500EB660F /* NavigationKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +131,7 @@
 			);
 			name = ProgressTracker;
 			packageProductDependencies = (
-				4ED56DBC2F09139B00DD2283 /* CustomRouting */,
+				4E1BECFA2F4F4E5500EB660F /* NavigationKit */,
 			);
 			productName = ProgressTracker;
 			productReference = 4ED56BA22F09113600DD2283 /* ProgressTracker.app */;
@@ -216,7 +216,7 @@
 			mainGroup = 4ED56B992F09113600DD2283;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				4ED56DBB2F09139B00DD2283 /* XCRemoteSwiftPackageReference "CustomRouting" */,
+				4E1BECF92F4F4E5500EB660F /* XCRemoteSwiftPackageReference "NavigationKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4ED56BA32F09113600DD2283 /* Products */;
@@ -372,6 +372,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -427,6 +428,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -605,21 +607,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4ED56DBB2F09139B00DD2283 /* XCRemoteSwiftPackageReference "CustomRouting" */ = {
+		4E1BECF92F4F4E5500EB660F /* XCRemoteSwiftPackageReference "NavigationKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kejlor/CustomRouting";
+			repositoryURL = "https://github.com/KociucKy/NavigationKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 1.1.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4ED56DBC2F09139B00DD2283 /* CustomRouting */ = {
+		4E1BECFA2F4F4E5500EB660F /* NavigationKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4ED56DBB2F09139B00DD2283 /* XCRemoteSwiftPackageReference "CustomRouting" */;
-			productName = CustomRouting;
+			package = 4E1BECF92F4F4E5500EB660F /* XCRemoteSwiftPackageReference "NavigationKit" */;
+			productName = NavigationKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -91,8 +91,8 @@ class HabitDetailsPresenter {
     }
     
     private func getCompletedDates() {
-        guard let habitCompletedDates = habit.completedDates else { return }
-        completedDates.formUnion(habitCompletedDates)
+//        guard let habitCompletedDates = habit.completedDates else { return }
+//        completedDates.formUnion(habitCompletedDates)
     }
     
     private func generatePreviousDates(from startDate: Date, count: Int) -> [Date] {

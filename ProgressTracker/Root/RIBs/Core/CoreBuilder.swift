@@ -5,8 +5,6 @@ struct CoreBuilder: Builder {
     let interactor: CoreInteractor
     
     func build() -> AnyView {
-//        Text("Welcome in Progress Tracker")
-//            .any()
         RouterView { router in
             habitsView(router: router)
         }
@@ -49,8 +47,7 @@ struct CoreBuilder: Builder {
                 interactor: interactor,
                 router: CoreRouter(router: router, builder: self),
                 habit: habit
-            ),
-            habit: habit
+            )
         )
     }
 }

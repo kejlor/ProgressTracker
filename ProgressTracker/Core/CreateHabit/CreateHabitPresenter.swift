@@ -27,7 +27,7 @@ class CreateHabitPresenter {
         guard let selectedColor else { return }
         
         let habit = HabitModel(
-            habitId: UUID().uuidString,
+            id: UUID(),
             habitColorHex: selectedColor.asHex(),
             days: 0,
             name: habitNameText

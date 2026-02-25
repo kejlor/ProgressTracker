@@ -2,7 +2,6 @@ import SwiftUI
 
 struct HabitDetailsView: View {
     @State var presenter: HabitDetailsPresenter
-    let habit: HabitModel
     
     var body: some View {
         VStack(spacing: 0) {

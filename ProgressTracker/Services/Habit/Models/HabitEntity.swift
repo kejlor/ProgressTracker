@@ -9,30 +9,27 @@ import SwiftUI
 import SwiftData
 
 @Model
-class HabitEntity {
-    @Attribute(.unique) var habitId: String
+final class HabitEntity {
+    @Attribute(.unique) var id: UUID
     var habitColorHex: String
     var days: Int
     var name: String
     var dateAdded: Date
-    var completedDates: [Date]?
     
     init(from model: HabitModel) {
-        self.habitId = model.habitId
+        self.id = model.id
         self.habitColorHex = model.habitColorHex
         self.days = model.days
         self.name = model.name
         self.dateAdded = .now
-        self.completedDates = model.completedDates
     }
     
     func toModel() -> HabitModel {
         HabitModel(
-            habitId: habitId,
+            id: id,
             habitColorHex: habitColorHex,
             days: days,
-            name: name,
-            completedDates: completedDates
+            name: name
         )
     }
 }

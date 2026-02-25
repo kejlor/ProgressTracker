@@ -1,9 +1,9 @@
 import SwiftUI
-import CustomRouting
+import NavigationKit
 
-typealias RouterView = CustomRouting.RouterView
-typealias Router = CustomRouting.Router
-typealias AlertType = CustomRouting.AlertType
+typealias RouterView = NavigationKit.RouterView
+typealias Router = NavigationKit.Router
+typealias AlertType = NavigationKit.AlertType
 
 @MainActor
 struct CoreRouter: GlobalRouter {
@@ -11,22 +11,21 @@ struct CoreRouter: GlobalRouter {
     let builder: CoreBuilder
     
     func showHabitsView() {
-        router.showScreen(.push) { router in
+        router.showScreen(.push, onDismiss: nil) { router in
             builder.habitsView(router: router)
         }
     }
     
     // TODO: Fix issues with navigation
     func showHabitDetailsView(habit: HabitModel) {
-        router.showScreen(.push) { router in
+        router.showScreen(.push, onDismiss: nil) { router in
             builder.habitDetailsView(router: router, habit: habit)
         }
     }
     
     func showAddHabitView(onDisappear: @escaping () -> Void) {
-        router.showScreen(.sheet) { router in
+        router.showScreen(.push, onDismiss: onDisappear) { router in
             builder.createHabitView(router: router)
-                .onDisappear(perform: onDisappear)
         }
     }
 }

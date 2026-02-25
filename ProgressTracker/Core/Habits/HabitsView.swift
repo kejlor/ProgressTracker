@@ -29,7 +29,7 @@ private extension HabitsView {
     
     private var habitsList: some View {
         List {
-            ForEach(presenter.habits, id: \.habitId) { habit in
+            ForEach(presenter.habits, id: \.id) { habit in
                 habitView(habit)
                     .anyButton(action: {
                         presenter.onHabitPressed(habit: habit)

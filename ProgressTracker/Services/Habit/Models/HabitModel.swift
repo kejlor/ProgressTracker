@@ -8,31 +8,24 @@
 import SwiftUI
 
 struct HabitModel: Hashable, Codable {
-    var id: String {
-        habitId
-    }
-    
-    let habitId: String
+    let id: UUID
     let habitColorHex: String
     private(set) var days: Int
     private(set) var name: String
     let dateCreated: Date?
-    let completedDates: [Date]?
     
     init(
-        habitId: String,
+        id: UUID,
         habitColorHex: String,
         days: Int,
         name: String,
-        dateCreated: Date? = nil,
-        completedDates: [Date]? = nil
+        dateCreated: Date? = nil
     ) {
-        self.habitId = habitId
+        self.id = id
         self.habitColorHex = habitColorHex
         self.days = days
         self.name = name
         self.dateCreated = dateCreated
-        self.completedDates = completedDates
     }
     
     var habitColorCalculated: Color {
@@ -53,7 +46,7 @@ struct HabitModel: Hashable, Codable {
         name: String
     ) -> Self {
         HabitModel(
-            habitId: UUID().uuidString,
+            id: UUID(),
             habitColorHex: habitColorHex,
             days: days,
             name: name,
@@ -68,21 +61,21 @@ struct HabitModel: Hashable, Codable {
     static var mocks: [Self] {
         [
             HabitModel(
-                habitId: UUID().uuidString,
+                id: UUID(),
                 habitColorHex: "#87CEEB",
                 days: 123,
                 name: "Drawing",
                 dateCreated: .now
             ),
             HabitModel(
-                habitId: UUID().uuidString,
+                id: UUID(),
                 habitColorHex: "#EE4B2B",
                 days: 456,
                 name: "Programming",
                 dateCreated: .now
             ),
             HabitModel(
-                habitId: UUID().uuidString,
+                id: UUID(),
                 habitColorHex: "#228B22",
                 days: 789,
                 name: "Gym",

@@ -15,18 +15,16 @@ struct CoreBuilder: Builder {
         router: Router,
         habit: HabitModel
     ) -> some View {
-        RouterView { router in
-            HabitView(
-                presenter: HabitPresenter(
-                    interactor: interactor,
-                    router: CoreRouter(
-                        router: router,
-                        builder: self
-                    )
-                ),
-                habit: habit
-            )
-        }
+        HabitView(
+            presenter: HabitPresenter(
+                interactor: interactor,
+                router: CoreRouter(
+                    router: router,
+                    builder: self
+                )
+            ),
+            habit: habit
+        )
     }
     
     func habitsView(router: Router) -> some View {

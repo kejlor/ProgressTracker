@@ -9,17 +9,18 @@ import SwiftUI
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     var dependencies: Dependencies!
-    var builder: CoreBuilder!
+    var builder: RootBuilder!
     
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        let dependencies = Dependencies()
-        builder = CoreBuilder(
-            interactor: CoreInteractor(
-                container: dependencies.container
-            )
+        dependencies = Dependencies()
+        builder = RootBuilder(
+            interactor: RootInteractor(container: dependencies.container),
+            coreRIB: {
+                CoreBuilder(interactor: CoreInteractor(container: self.dependencies.container))
+            }
         )
         return true
     }

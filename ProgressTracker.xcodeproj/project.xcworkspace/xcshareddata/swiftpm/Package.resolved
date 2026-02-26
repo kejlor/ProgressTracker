@@ -1,13 +1,13 @@
 {
-  "originHash" : "6c6fa4f42bfc95ebd1948d0528d8af263629db5784dd9224d45c00e150666afc",
+  "originHash" : "32966858c810a72cceb1367d683e8c85b2929a8ae29423c37026240cf9a12b57",
   "pins" : [
     {
-      "identity" : "customrouting",
+      "identity" : "navigationkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kejlor/CustomRouting",
+      "location" : "https://github.com/KociucKy/NavigationKit",
       "state" : {
-        "revision" : "6110ff9f0fc3ac72f7e8b95b5e8efae9035536e9",
-        "version" : "2.0.0"
+        "revision" : "7244c9ec5273c7668c465164ed3e72308cc38951",
+        "version" : "1.1.1"
       }
     }
   ],

@@ -14,9 +14,19 @@ final class HabitCompletionEntity {
     var habitId: UUID
     var date: Date
     
-    init(habitId: UUID, date: Date) {
+    init(
+        habitId: UUID,
+        date: Date
+    ) {
         self.id = UUID()
         self.habitId = habitId
         self.date = date
+    }
+    
+    func toModel() -> HabitCompletionModel {
+        HabitCompletionModel(
+            habitId: habitId,
+            date: date
+        )
     }
 }

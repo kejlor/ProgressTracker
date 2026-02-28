@@ -9,13 +9,13 @@ class HabitDetailsPresenter {
     private let dateFormatter: DateFormatter
     private let calendar: Calendar
     
-    // chyba ze zrobie dictionary [Date: Bool]
-    // problem: kazdy 1 komponent z listy jest sprawdzany czy zostal zrobiony
-    // cel: sprawdzanie raz na starcie i po tym jak user doda do zrobonych dana date
     private(set) var previousDates: [Date] = []
-    private(set) var completedDates: Set<Date> = []
     private(set) var currentOffset = 0
     
+    // MARK: New approach
+    private(set) var completedDays: Set<Date> = []
+    
+    var currentHabitColor: Color
     var habitNameText: String
     var habitDateCrreated: Date?
     var selectedColor: Color?
@@ -34,12 +34,50 @@ class HabitDetailsPresenter {
         dateFormatter.dateStyle = .medium
         self.calendar = calendar
         
+        self.currentHabitColor = habit.habitColorCalculated
         self.habitNameText = habit.name
         self.habitDateCrreated = habit.dateCreated
         self.selectedColor = habit.habitColorCalculated
         
-        getCompletedDates()
+        fetchCompletedDays()
         loadPreviousDates()
+    }
+    
+    // MARK: AI Solution
+    private func fetchCompletedDays() {
+        do {
+            let completedHabits = try interactor.getHabitCompletions(habit: habit).map({ $0.date })
+            print("debugs: completedHabits \(completedHabits)")
+//            completedDays = Set(completedHabits)
+            
+            completedDays = Set(
+                completedHabits.map { calendar.startOfDay(for: $0) }
+            )
+            
+        } catch {
+            print("Caught error while fetching completed days")
+        }
+    }
+    
+    func hasCompletedHabit(at date: Date) -> Bool {
+//        print("debugs: no ciekawe ile razy bedzie to wywolane")
+        let day = calendar.startOfDay(for: date)
+        return completedDays.contains(day)
+    }
+    
+    func onCompletePressed(for date: Date) {
+        let day = calendar.startOfDay(for: date)
+        
+        do {
+            if completedDays.contains(day) {
+                try interactor.deleteHabitCompletion(habit: habit, date: day)
+            } else {
+                try interactor.addHabitToCompletions(habit: habit, date: day)
+            }
+            fetchCompletedDays()
+        } catch {
+            print("Caught error while complete pressed")
+        }
     }
     
     func onColorPressed(color: Color) {
@@ -56,18 +94,6 @@ class HabitDetailsPresenter {
     
     func formatDate(date: Date) -> String {
         dateFormatter.string(from: date)
-    }
-    
-    // TODO: Need further optimalization
-//    func hasCompletedHabit(at date: Date) -> Bool {
-//        print("debugs: i think it will be called too much")
-//        guard let completedDates = habit.completedDates else { return false }
-//        return completedDates.contains(where: { $0 == date })
-//    }
-    
-    func hasCompletedHabit(at date: Date) -> Bool {
-        print("debugs: i think it will be called too much")
-        return completedDates.contains(date.dayKey())
     }
     
     func loadPreviousDates() {
@@ -88,11 +114,6 @@ class HabitDetailsPresenter {
     
     func isLastDate(date: Date) -> Bool {
         previousDates.last == date
-    }
-    
-    private func getCompletedDates() {
-//        guard let habitCompletedDates = habit.completedDates else { return }
-//        completedDates.formUnion(habitCompletedDates)
     }
     
     private func generatePreviousDates(from startDate: Date, count: Int) -> [Date] {

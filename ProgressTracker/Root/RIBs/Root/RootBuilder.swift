@@ -14,7 +14,7 @@ struct RootBuilder: Builder {
             presenter: AppPresenter(
                 interactor: interactor
             ),
-            tabbarView: {
+            tabBarView: {
                 coreRIB().build()
             }
         )

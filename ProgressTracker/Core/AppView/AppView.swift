@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct AppView<TabbarView: View>: View {
+struct AppView<TabBarView: View>: View {
     @State var presenter: AppPresenter
-    @ViewBuilder var tabbarView: () -> TabbarView
+    @ViewBuilder var tabBarView: () -> TabBarView
     
     var body: some View {
         RootView(
@@ -16,8 +16,8 @@ struct AppView<TabbarView: View>: View {
             ),
             content: {
                 AppViewBuilder(
-                    tabbarView: {
-                        tabbarView()
+                    tabBarView: {
+                        tabBarView()
                     },
                     showTabBar: true
                 )

@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct AppViewBuilder<TabBarView: View>: View {
-    var tabbarView: () -> TabBarView
+    var tabBarView: () -> TabBarView
     var showTabBar: Bool = true
     
     var body: some View {
         ZStack {
-            tabbarView()
+            tabBarView()
                 .transition(.move(edge: .trailing))
         }
         .animation(.smooth, value: showTabBar)
@@ -25,7 +25,7 @@ private struct Preview: View {
     
     var body: some View {
         AppViewBuilder(
-            tabbarView: {
+            tabBarView: {
                 ZStack {
                     Color.red.ignoresSafeArea()
                     Text("TabBar")

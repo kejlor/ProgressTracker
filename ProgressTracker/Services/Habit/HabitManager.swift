@@ -12,9 +12,7 @@ import SwiftUI
 class HabitManager {
     private let local: LocalHabitPersistence
     
-    init(
-        local: LocalHabitPersistence
-    ) {
+    init(local: LocalHabitPersistence) {
         self.local = local
     }
     

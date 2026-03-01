@@ -14,10 +14,18 @@ class Dependencies {
     let container: DependencyContainer
     
     init() {
-        let localHabitService = SwiftDataLocalHabitPersistence()
+        let habitManager: HabitManager
+        let habitCompletionManager: HabitCompletionManager
+        
+        // swiftlint:disable:next force_try
+        let modelContainer = try! ModelContainer(for: HabitEntity.self, HabitCompletionEntity.self)
+        
+        habitManager = HabitManager(local: SwiftDataLocalHabitPersistence(container: modelContainer))
+        habitCompletionManager = HabitCompletionManager(local: SwiftDataLocalHabitCompletionPersistence(container: modelContainer))
         
         let container = DependencyContainer()
-        container.register(LocalHabitPersistence.self, service: localHabitService)
+        container.register(HabitManager.self, service: habitManager)
+        container.register(HabitCompletionManager.self, service: habitCompletionManager)
         
         self.container = container
     }

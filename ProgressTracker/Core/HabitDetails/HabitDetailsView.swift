@@ -42,12 +42,13 @@ private extension HabitDetailsView {
     private func dateListView(date: Date) -> some View {
         HStack {
             Text(presenter.formatDate(date: date))
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             Button {
-                // TODO: Mark as completed
+                presenter.habitCompletionButtonAction(date: date)
             } label: {
                 Image(systemName: "checkmark.square.fill")
-                    .foregroundStyle(presenter.hasCompletedHabit(at: date) ? .green : .red)
+                    .foregroundStyle(presenter.hasCompletedHabit(at: date) ? presenter.currentHabitColor : .gray)
             }
         }
     }
@@ -64,14 +65,6 @@ private extension HabitDetailsView {
             }
         }
     }
-}
-
-extension CoreBuilder {
-
-}
-
-extension CoreRouter {
-
 }
 
 #Preview {

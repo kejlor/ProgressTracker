@@ -11,14 +11,12 @@ import SwiftData
 @MainActor
 struct SwiftDataLocalHabitPersistence: LocalHabitPersistence {
     private let container: ModelContainer
-    
     private var mainContext: ModelContext {
         container.mainContext
     }
     
-    init() {
-        // swiftlint:disable:next force_try
-        self.container = try! ModelContainer(for: HabitEntity.self)
+    init(container: ModelContainer) {
+        self.container = container
     }
     
     func addHabit(habit: HabitModel) throws {
@@ -34,8 +32,8 @@ struct SwiftDataLocalHabitPersistence: LocalHabitPersistence {
     func removeHabit(habit: HabitModel) throws {
         let habitEntity = HabitEntity(from: habit)
         let idToDelete = habitEntity.persistentModelID
-        try mainContext.delete(model: HabitEntity.self, where: #Predicate { user in
-            user.persistentModelID == idToDelete
+        try mainContext.delete(model: HabitEntity.self, where: #Predicate { habit in
+            habit.persistentModelID == idToDelete
         })
         try mainContext.save()
     }

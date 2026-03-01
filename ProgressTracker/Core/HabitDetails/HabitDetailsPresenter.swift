@@ -9,13 +9,11 @@ class HabitDetailsPresenter {
     private let dateFormatter: DateFormatter
     private let calendar: Calendar
     
-    // chyba ze zrobie dictionary [Date: Bool]
-    // problem: kazdy 1 komponent z listy jest sprawdzany czy zostal zrobiony
-    // cel: sprawdzanie raz na starcie i po tym jak user doda do zrobonych dana date
     private(set) var previousDates: [Date] = []
-    private(set) var completedDates: Set<Date> = []
     private(set) var currentOffset = 0
+    private(set) var habitCompletions: [HabitCompletionModel] = []
     
+    var currentHabitColor: Color
     var habitNameText: String
     var habitDateCrreated: Date?
     var selectedColor: Color?
@@ -34,12 +32,56 @@ class HabitDetailsPresenter {
         dateFormatter.dateStyle = .medium
         self.calendar = calendar
         
+        self.currentHabitColor = habit.habitColorCalculated
         self.habitNameText = habit.name
         self.habitDateCrreated = habit.dateCreated
         self.selectedColor = habit.habitColorCalculated
         
-        getCompletedDates()
+        fetchHabitCompletions()
         loadPreviousDates()
+    }
+    
+    private func fetchHabitCompletions() {
+        do {
+            habitCompletions = try interactor.getHabitCompletions(habit: habit)
+        } catch {
+            print("Caught error while fetching habit completions")
+        }
+    }
+    
+    func habitCompletionButtonAction(date: Date) {
+        let day = calendar.startOfDay(for: date)
+        
+        if habitCompletions.contains(where: { $0.date == day }) {
+            removeFromCompletedHabits(date: date)
+        } else {
+            addToCompletedHabits(date: date)
+        }
+        
+        fetchHabitCompletions()
+    }
+    
+    private func addToCompletedHabits(date: Date) {
+        do {
+            let day = calendar.startOfDay(for: date)
+            try interactor.addHabitToCompletions(habit: habit, date: day)
+        } catch {
+            print("Caught error while adding habit to completions")
+        }
+    }
+    
+    private func removeFromCompletedHabits(date: Date) {
+        do {
+            let day = calendar.startOfDay(for: date)
+            try interactor.deleteHabitCompletion(habit: habit, date: day)
+        } catch {
+            print("Caught error while removing habit from completions")
+        }
+    }
+    
+    func hasCompletedHabit(at date: Date) -> Bool {
+        let day = calendar.startOfDay(for: date)
+        return habitCompletions.contains(where: { $0.date == day })
     }
     
     func onColorPressed(color: Color) {
@@ -58,30 +100,18 @@ class HabitDetailsPresenter {
         dateFormatter.string(from: date)
     }
     
-    // TODO: Need further optimalization
-//    func hasCompletedHabit(at date: Date) -> Bool {
-//        print("debugs: i think it will be called too much")
-//        guard let completedDates = habit.completedDates else { return false }
-//        return completedDates.contains(where: { $0 == date })
-//    }
-    
-    func hasCompletedHabit(at date: Date) -> Bool {
-        print("debugs: i think it will be called too much")
-        return completedDates.contains(date.dayKey())
-    }
-    
     func loadPreviousDates() {
         let startDate = calendar.date(
             byAdding: .day,
             value: -currentOffset,
             to: Date()
         ) ?? Date()
-
+        
         let newDates = generatePreviousDates(
             from: startDate,
             count: 30
         )
-
+        
         previousDates.append(contentsOf: newDates)
         currentOffset += 30
     }
@@ -90,15 +120,10 @@ class HabitDetailsPresenter {
         previousDates.last == date
     }
     
-    private func getCompletedDates() {
-//        guard let habitCompletedDates = habit.completedDates else { return }
-//        completedDates.formUnion(habitCompletedDates)
-    }
-    
     private func generatePreviousDates(from startDate: Date, count: Int) -> [Date] {
         var dates: [Date] = []
         let calendar = Calendar.current
-
+        
         for dayOffset in 0..<count {
             if let date = calendar.date(byAdding: .day, value: -dayOffset, to: startDate) {
                 dates.append(date)

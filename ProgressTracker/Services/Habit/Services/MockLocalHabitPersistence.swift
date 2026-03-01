@@ -5,8 +5,6 @@
 //  Created by Bartosz Wojtkowiak on 15/01/2026.
 //
 
-import Foundation
-
 struct MockLocalHabitPersistence: LocalHabitPersistence {
     let habits: [HabitModel]
     
@@ -27,18 +25,6 @@ struct MockLocalHabitPersistence: LocalHabitPersistence {
     }
     
     func updateHabit(habit: HabitModel) throws {
-        
-    }
-    
-    func addHabitToCompletions(habit: HabitModel, date: Date) throws {
-        
-    }
-    
-    func getHabitCompletions(habit: HabitModel) throws -> [HabitCompletionModel] {
-        []
-    }
-    
-    func deleteHabitCompletion(habit: HabitModel, date: Date) throws {
         
     }
 }

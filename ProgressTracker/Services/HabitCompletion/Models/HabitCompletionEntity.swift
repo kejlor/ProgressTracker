@@ -23,8 +23,15 @@ final class HabitCompletionEntity {
         self.date = date
     }
     
+    init(from model: HabitCompletionModel) {
+        self.id = model.id
+        self.habitId = model.habitId
+        self.date = model.date
+    }
+    
     func toModel() -> HabitCompletionModel {
         HabitCompletionModel(
+            id: id,
             habitId: habitId,
             date: date
         )

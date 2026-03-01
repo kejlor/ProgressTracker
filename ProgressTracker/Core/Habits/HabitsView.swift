@@ -43,10 +43,7 @@ private extension HabitsView {
     
     private var addHabitButton: some View {
         Button {
-            presenter.onAddHabitPressed(onDisappear: {
-                print("debugs: trying to refetch habits")
-                presenter.getHabits()
-            })
+            presenter.onAddHabitPressed(onDisappear: { presenter.getHabits() })
         } label: {
             VStack(spacing: 0) {
                 Image(systemName: "plus.square.fill")

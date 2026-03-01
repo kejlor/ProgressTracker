@@ -12,9 +12,7 @@ import SwiftUI
 class HabitManager {
     private let local: LocalHabitPersistence
     
-    init(
-        local: LocalHabitPersistence
-    ) {
+    init(local: LocalHabitPersistence) {
         self.local = local
     }
     
@@ -32,17 +30,5 @@ class HabitManager {
     
     func updateHabit(habit: HabitModel) throws {
         try local.addHabit(habit: habit)
-    }
-    
-    func addHabitToCompletions(habit: HabitModel, date: Date) throws {
-        try local.addHabitToCompletions(habit: habit, date: date)
-    }
-    
-    func getHabitCompletions(habit: HabitModel) throws -> [HabitCompletionModel] {
-        try local.getHabitCompletions(habit: habit)
-    }
-    
-    func deleteHabitCompletion(habit: HabitModel, date: Date) throws {
-        try local.deleteHabitCompletion(habit: habit, date: date)
     }
 }

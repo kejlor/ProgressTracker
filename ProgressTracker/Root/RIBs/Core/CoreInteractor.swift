@@ -3,10 +3,11 @@ import SwiftUI
 @MainActor
 struct CoreInteractor {
     private let habitManager: HabitManager
+    private let habitCompletionManager: HabitCompletionManager
     
     init(container: DependencyContainer) {
-        let localHabitService = container.resolve(LocalHabitPersistence.self)!
-        self.habitManager = HabitManager(local: localHabitService)
+        self.habitManager = container.resolve(HabitManager.self)!
+        self.habitCompletionManager = container.resolve(HabitCompletionManager.self)!
     }
     
     func addHabit(habit: HabitModel) throws {
@@ -26,14 +27,18 @@ struct CoreInteractor {
     }
     
     func addHabitToCompletions(habit: HabitModel, date: Date) throws {
-        try habitManager.addHabitToCompletions(habit: habit, date: date)
+        try habitCompletionManager.addHabitToCompletions(habit: habit, date: date)
+    }
+    
+    func getAllHabitCompletions() throws -> [HabitCompletionModel] {
+        try habitCompletionManager.getAllHabitCompletions()
     }
     
     func getHabitCompletions(habit: HabitModel) throws -> [HabitCompletionModel] {
-        try habitManager.getHabitCompletions(habit: habit)
+        try habitCompletionManager.getHabitCompletions(habit: habit)
     }
     
     func deleteHabitCompletion(habit: HabitModel, date: Date) throws {
-        try habitManager.deleteHabitCompletion(habit: habit, date: date)
+        try habitCompletionManager.deleteHabitCompletion(habit: habit, date: date)
     }
 }

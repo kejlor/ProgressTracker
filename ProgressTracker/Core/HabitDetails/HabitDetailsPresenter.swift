@@ -11,9 +11,7 @@ class HabitDetailsPresenter {
     
     private(set) var previousDates: [Date] = []
     private(set) var currentOffset = 0
-    
-    // MARK: New approach
-    private(set) var completedDays: Set<Date> = []
+    private(set) var habitCompletions: [HabitCompletionModel] = []
     
     var currentHabitColor: Color
     var habitNameText: String
@@ -39,45 +37,51 @@ class HabitDetailsPresenter {
         self.habitDateCrreated = habit.dateCreated
         self.selectedColor = habit.habitColorCalculated
         
-        fetchCompletedDays()
+        fetchHabitCompletions()
         loadPreviousDates()
     }
     
-    // MARK: AI Solution
-    private func fetchCompletedDays() {
+    private func fetchHabitCompletions() {
         do {
-            let completedHabits = try interactor.getHabitCompletions(habit: habit).map({ $0.date })
-            print("debugs: completedHabits \(completedHabits)")
-//            completedDays = Set(completedHabits)
-            
-            completedDays = Set(
-                completedHabits.map { calendar.startOfDay(for: $0) }
-            )
-            
+            habitCompletions = try interactor.getHabitCompletions(habit: habit)
         } catch {
-            print("Caught error while fetching completed days")
+            print("Caught error while fetching habit completions")
+        }
+    }
+    
+    func habitCompletionButtonAction(date: Date) {
+        let day = calendar.startOfDay(for: date)
+        
+        if habitCompletions.contains(where: { $0.date == day }) {
+            removeFromCompletedHabits(date: date)
+        } else {
+            addToCompletedHabits(date: date)
+        }
+        
+        fetchHabitCompletions()
+    }
+    
+    private func addToCompletedHabits(date: Date) {
+        do {
+            let day = calendar.startOfDay(for: date)
+            try interactor.addHabitToCompletions(habit: habit, date: day)
+        } catch {
+            print("Caught error while adding habit to completions")
+        }
+    }
+    
+    private func removeFromCompletedHabits(date: Date) {
+        do {
+            let day = calendar.startOfDay(for: date)
+            try interactor.deleteHabitCompletion(habit: habit, date: day)
+        } catch {
+            print("Caught error while removing habit from completions")
         }
     }
     
     func hasCompletedHabit(at date: Date) -> Bool {
-//        print("debugs: no ciekawe ile razy bedzie to wywolane")
         let day = calendar.startOfDay(for: date)
-        return completedDays.contains(day)
-    }
-    
-    func onCompletePressed(for date: Date) {
-        let day = calendar.startOfDay(for: date)
-        
-        do {
-            if completedDays.contains(day) {
-                try interactor.deleteHabitCompletion(habit: habit, date: day)
-            } else {
-                try interactor.addHabitToCompletions(habit: habit, date: day)
-            }
-            fetchCompletedDays()
-        } catch {
-            print("Caught error while complete pressed")
-        }
+        return habitCompletions.contains(where: { $0.date == day })
     }
     
     func onColorPressed(color: Color) {
@@ -102,12 +106,12 @@ class HabitDetailsPresenter {
             value: -currentOffset,
             to: Date()
         ) ?? Date()
-
+        
         let newDates = generatePreviousDates(
             from: startDate,
             count: 30
         )
-
+        
         previousDates.append(contentsOf: newDates)
         currentOffset += 30
     }
@@ -119,7 +123,7 @@ class HabitDetailsPresenter {
     private func generatePreviousDates(from startDate: Date, count: Int) -> [Date] {
         var dates: [Date] = []
         let calendar = Calendar.current
-
+        
         for dayOffset in 0..<count {
             if let date = calendar.date(byAdding: .day, value: -dayOffset, to: startDate) {
                 dates.append(date)

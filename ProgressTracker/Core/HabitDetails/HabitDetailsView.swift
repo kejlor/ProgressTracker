@@ -45,7 +45,7 @@ private extension HabitDetailsView {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Button {
-                presenter.onCompletePressed(for: date)
+                presenter.habitCompletionButtonAction(date: date)
             } label: {
                 Image(systemName: "checkmark.square.fill")
                     .foregroundStyle(presenter.hasCompletedHabit(at: date) ? presenter.currentHabitColor : .gray)

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct HabitModel: Hashable, Codable {
     let id: UUID
-    let habitColorHex: String
-    private(set) var days: Int
-    private(set) var name: String
+    var habitColorHex: String
+    var days: Int
+    var name: String
     let dateCreated: Date?
     
     init(

@@ -30,21 +30,35 @@ struct SwiftDataLocalHabitPersistence: LocalHabitPersistence {
     }
     
     func removeHabit(habit: HabitModel) throws {
-        let habitEntity = HabitEntity(from: habit)
-        let idToDelete = habitEntity.persistentModelID
-        try mainContext.delete(model: HabitEntity.self, where: #Predicate { habit in
-            habit.persistentModelID == idToDelete
-        })
-        try mainContext.save()
+        let descriptor = FetchDescriptor<HabitEntity>(
+            predicate: #Predicate {
+                $0.id == habit.id
+            }
+        )
+        
+        if let entityToDelete = try mainContext.fetch(descriptor).first {
+            mainContext.delete(entityToDelete)
+            try mainContext.save()
+        }
     }
     
     func updateHabit(habit: HabitModel) throws {
-        try insertHabit(habit: habit)
+        guard let existing = try fetch(by: habit.id) else { return }
+        existing.habitColorHex = habit.habitColorHex
+        existing.days = habit.days
+        existing.name = habit.name
+        
+        try mainContext.save()
     }
     
     private func insertHabit(habit: HabitModel) throws {
         let entity = HabitEntity(from: habit)
         mainContext.insert(entity)
         try mainContext.save()
+    }
+    
+    private func fetch(by id: UUID) throws -> HabitEntity? {
+        let descriptor = FetchDescriptor<HabitEntity>(predicate: #Predicate { $0.id == id})
+        return try mainContext.fetch(descriptor).first
     }
 }

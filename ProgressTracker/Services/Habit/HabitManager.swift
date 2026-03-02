@@ -29,6 +29,6 @@ class HabitManager {
     }
     
     func updateHabit(habit: HabitModel) throws {
-        try local.addHabit(habit: habit)
+        try local.updateHabit(habit: habit)
     }
 }

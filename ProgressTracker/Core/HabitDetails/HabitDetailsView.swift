@@ -8,6 +8,7 @@ struct HabitDetailsView: View {
             editHabitNameSection
             deleteHabitButton
             previousDates
+            updateHabitButton
         }
     }
 }
@@ -23,9 +24,9 @@ private extension HabitDetailsView {
         }
     }
     
-    private var saveHabitButton: some View {
+    private var updateHabitButton: some View {
         Button {
-            presenter.onSavePressed()
+            presenter.onUpdatePressed()
         } label: {
             Text("Update habit")
         }
@@ -75,7 +76,8 @@ private extension HabitDetailsView {
         builder
             .habitDetailsView(
                 router: router,
-                habit: HabitModel.mock
+                habit: HabitModel.mock,
+                refetchData: { }
             )
     }
 }

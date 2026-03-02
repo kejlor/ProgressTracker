@@ -5,7 +5,8 @@ import SwiftUI
 class HabitDetailsPresenter {
     private let interactor: HabitDetailsInteractor
     private let router: HabitDetailsRouter
-    private let habit: HabitModel
+    private var habit: HabitModel
+    private let refetchData: () -> Void
     private let dateFormatter: DateFormatter
     private let calendar: Calendar
     
@@ -22,12 +23,14 @@ class HabitDetailsPresenter {
         interactor: HabitDetailsInteractor,
         router: HabitDetailsRouter,
         habit: HabitModel,
+        refetchData: @escaping () -> Void,
         dateFormatter: DateFormatter = DateFormatter(),
         calendar: Calendar = Calendar.current
     ) {
         self.interactor = interactor
         self.router = router
         self.habit = habit
+        self.refetchData = refetchData
         self.dateFormatter = dateFormatter
         dateFormatter.dateStyle = .medium
         self.calendar = calendar
@@ -88,12 +91,28 @@ class HabitDetailsPresenter {
         selectedColor = color
     }
     
-    func onSavePressed() {
-        // TODO: Add logic to update model inside swiftdata
+    func onUpdatePressed() {
+        updateHabit()
+        refetchData()
+    }
+    
+    private func updateHabit() {
+        do {
+            habit.name = habitNameText
+            try interactor.updateHabit(habit: habit)
+        } catch {
+            print("Caught and error while updating habit")
+        }
     }
     
     func onDeletePressed() {
-        // TODO: Add logic to delete model from SwiftData
+        do {
+            try interactor.removeHabit(habit: habit)
+            refetchData()
+            router.dismissScreen()
+        } catch {
+            print("Caught an error while removing habit")
+        }
     }
     
     func formatDate(date: Date) -> String {

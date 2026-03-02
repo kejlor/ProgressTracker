@@ -73,12 +73,13 @@ struct CoreBuilder: Builder {
         )
     }
     
-    func habitDetailsView(router: Router, habit: HabitModel) -> some View {
+    func habitDetailsView(router: Router, habit: HabitModel, refetchData: @escaping () -> Void) -> some View {
         HabitDetailsView(
             presenter: HabitDetailsPresenter(
                 interactor: interactor,
                 router: CoreRouter(router: router, builder: self),
-                habit: habit
+                habit: habit,
+                refetchData: refetchData
             )
         )
     }

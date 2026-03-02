@@ -16,9 +16,14 @@ struct CoreRouter: GlobalRouter {
         }
     }
     
-    func showHabitDetailsView(habit: HabitModel) {
+    func showHabitDetailsView(habit: HabitModel, refetchData: @escaping () -> Void) {
         router.showScreen(.push, onDismiss: nil) { router in
-            builder.habitDetailsView(router: router, habit: habit)
+            builder
+                .habitDetailsView(
+                    router: router,
+                    habit: habit,
+                    refetchData: refetchData
+                )
         }
     }
     

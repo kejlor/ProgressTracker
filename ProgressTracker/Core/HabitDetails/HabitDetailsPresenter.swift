@@ -62,6 +62,7 @@ class HabitDetailsPresenter {
         }
         
         fetchHabitCompletions()
+        updateDaysCount()
     }
     
     private func addToCompletedHabits(date: Date) {
@@ -101,7 +102,16 @@ class HabitDetailsPresenter {
             habit.name = habitNameText
             try interactor.updateHabit(habit: habit)
         } catch {
-            print("Caught and error while updating habit")
+            print("Caught an error while updating habit")
+        }
+    }
+    
+    private func updateDaysCount() {
+        do {
+            habit.days = habitCompletions.count
+            try interactor.updateHabit(habit: habit)
+        } catch {
+            print("Caught an error while updating days count")
         }
     }
     
@@ -141,7 +151,6 @@ class HabitDetailsPresenter {
     
     private func generatePreviousDates(from startDate: Date, count: Int) -> [Date] {
         var dates: [Date] = []
-        let calendar = Calendar.current
         
         for dayOffset in 0..<count {
             if let date = calendar.date(byAdding: .day, value: -dayOffset, to: startDate) {

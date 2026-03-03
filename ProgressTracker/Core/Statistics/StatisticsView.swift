@@ -24,9 +24,13 @@ private extension StatisticsView {
     
     private var completedHabitsList: some View {
         List {
-            ForEach(presenter.completedHabits, id: \.habitId) { completedHabit in
+            ForEach(presenter.completedHabits, id: \.id) { completedHabit in
                 // TODO: Add completed habit view implementation to statistics
-                Text("Hello world.")
+                VStack {
+                    Text("habit id: \(completedHabit.habitId)")
+                        .bold()
+                    Text("completed habit id: \(completedHabit.id)")
+                }
             }
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)

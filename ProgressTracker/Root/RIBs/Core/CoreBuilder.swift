@@ -55,9 +55,9 @@ struct CoreBuilder: Builder {
                 router: CoreRouter(
                     router: router,
                     builder: self
-                )
-            ),
-            habit: habit
+                ),
+                habit: habit
+            )
         )
     }
     

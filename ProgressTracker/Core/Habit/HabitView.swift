@@ -2,29 +2,32 @@ import SwiftUI
 
 struct HabitView: View {
     @State var presenter: HabitPresenter
-    let habit: HabitModel
     
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
                 habitTitle
                 daysSection
-                completedTodaySection
+                if presenter.hasCompletedToday {
+                    completedTodaySection
+                }
                 currentWeekProgressSection
             }
-            completeButton
+            if !presenter.hasCompletedToday {
+                completeButton
+            }
         }
         .padding(15)
         .background {
             RoundedRectangle(cornerRadius: 10)
-                .foregroundStyle(habit.habitColorCalculated.opacity(0.2))
+                .foregroundStyle(presenter.habit.habitColorCalculated.opacity(0.2))
         }
     }
 }
 
 private extension HabitView {
     private var habitTitle: some View {
-        Text(habit.name)
+        Text(presenter.habit.name)
             .font(.title)
             .fontWeight(.bold)
             .minimumScaleFactor(0.5)
@@ -34,21 +37,19 @@ private extension HabitView {
     
     private var completeButton: some View {
         Button {
-            // TODO: Mutate habit progress
-            // TODO: Hide this button, change foreground style of completed today component
-            print("debugs: pressed complete button")
+            presenter.markTodayAsCompleted()
         } label: {
                 Image(systemName: "checkmark.square.fill")
                     .resizable()
                     .frame(width: 35, height: 35)
         }
-        .foregroundStyle(habit.habitColorCalculated)
+        .foregroundStyle(presenter.habit.habitColorCalculated)
         .buttonStyle(.plain)
     }
     
     private var daysSection: some View {
         HStack {
-            Text("\(habit.days)")
+            Text("\(presenter.habit.days)")
                 .font(.title)
                 .fontWeight(.bold)
             
@@ -65,7 +66,7 @@ private extension HabitView {
             Image(systemName: "checkmark.square.fill")
                 .resizable()
                 .frame(width: 15, height: 15)
-                .foregroundStyle(habit.habitColorCalculated)
+                .foregroundStyle(presenter.habit.habitColorCalculated)
         }
     }
     
@@ -86,7 +87,7 @@ extension HabitView {
             Text(presenter.formatDate(date))
                 .font(.caption)
             RoundedRectangle(cornerRadius: 4)
-                .fill(habit.habitColorCalculated)
+                .fill(presenter.hasCompleted(for: date) ? presenter.habit.habitColorCalculated : .gray)
                 .frame(width: 15, height: 15)
         }
     }

@@ -98,7 +98,7 @@ extension HabitView {
     let builder = CoreBuilder(interactor: CoreInteractor(container: container))
     
     return RouterView { router in
-        builder.createHabitView(
+        builder.habitListView(
             router: router,
             habit: HabitModel.mock
         )
@@ -111,11 +111,11 @@ extension HabitView {
     
     return RouterView { router in
         HStack {
-            builder.createHabitView(
+            builder.habitListView(
                 router: router,
                 habit: HabitModel.mocks[0]
             )
-            builder.createHabitView(
+            builder.habitListView(
                 router: router,
                 habit: HabitModel.mocks[1]
             )

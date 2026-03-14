@@ -4,38 +4,60 @@ struct CreateHabitView: View {
     @State var presenter: CreateHabitPresenter
     
     var body: some View {
-        ScrollView {
-            textFieldSection
-            colorGrid
-                .padding(.horizontal, 24)
-        }
-        .safeAreaInset(
-            edge: .bottom,
-            alignment: .center,
-            spacing: 16,
-            content: {
-                ZStack {
-                    if let selectedColor = presenter.selectedColor {
-                        ctaButton(selectedColor: selectedColor)
-                            .transition(AnyTransition.move(edge: .bottom))
-                    }
-                }
-                .padding(24)
-                .background(Color(uiColor: .systemBackground))
+        VStack(spacing: 0) {
+            ScrollView {
+                textFieldSection
+                colorGrid
+                    .padding(.horizontal, 24)
             }
-        )
-        .animation(.bouncy, value: presenter.selectedColor)
-        .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(
+                edge: .bottom,
+                alignment: .center,
+                spacing: 16,
+                content: {
+                    ZStack {
+                        if let selectedColor = presenter.selectedColor {
+                            ctaButton(selectedColor: selectedColor)
+                                .transition(AnyTransition.move(edge: .bottom))
+                        }
+                    }
+                    .padding(24)
+                    .background(Color(uiColor: .systemBackground))
+                }
+            )
+            .animation(.bouncy, value: presenter.selectedColor)
+        }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Add", systemImage: "checkmark") {
+                    presenter.onAddPressed()
+                }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                Text("Add new habit")
+            }
+            
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", systemImage: "xmark") {
+                    presenter.onCancelPressed()
+                }
+            }
+        }
+//        .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+        //        .navigationTitle("Add new habit")
     }
-    
-    private var textFieldSection: some View {
+}
+
+private extension CreateHabitView {
+    var textFieldSection: some View {
         TextField("Enter habit name", text: $presenter.habitNameText)
             .keyboardType(.alphabet)
             .autocorrectionDisabled()
             .accessibilityIdentifier("HabitTextField")
     }
     
-    private var colorGrid: some View {
+    var colorGrid: some View {
         LazyVGrid(
             columns: Array(repeating: GridItem(.flexible(), spacing: 24), count: 3),
             alignment: .center,
@@ -67,32 +89,13 @@ struct CreateHabitView: View {
         )
     }
     
-    private func ctaButton(selectedColor: Color) -> some View {
+    func ctaButton(selectedColor: Color) -> some View {
         Text("Continue")
             .callToActionButton()
             .anyButton(action: {
                 presenter.onAddPressed()
             })
             .accessibilityIdentifier("ContinueButton")
-    }
-}
-
-extension CoreBuilder {
-    func createHabitView(router: Router) -> some View {
-        CreateHabitView(
-            presenter: CreateHabitPresenter(
-                interactor: interactor,
-                router: CoreRouter(router: router, builder: self)
-            )
-        )
-    }
-}
-
-extension CoreRouter {
-    func showCreateHabitView() {
-        router.showScreen(.push, onDismiss: nil) { router in
-            builder.createHabitView(router: router)
-        }
     }
 }
 

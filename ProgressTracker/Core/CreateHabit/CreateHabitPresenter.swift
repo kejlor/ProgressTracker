@@ -40,4 +40,9 @@ class CreateHabitPresenter {
             print("Caught error while adding habit")
         }
     }
+    
+    func onCancelPressed() {
+        print("debugs: pressing cancel button")
+        router.dismissScreen()
+    }
 }

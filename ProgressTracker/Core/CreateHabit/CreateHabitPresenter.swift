@@ -8,8 +8,9 @@ class CreateHabitPresenter {
     
     private(set) var selectedColor: Color?
     
-    let profileColors: [Color] = [.red, .green, .orange, .blue, .mint, .purple, .cyan, .teal, .indigo]
+    let habitThemeColors: [Color] = [.red, .green, .orange, .blue, .mint, .purple, .cyan, .teal, .indigo]
     var habitNameText: String = ""
+    var startDate: Date
     
     init(
         interactor: CreateHabitInteractor,
@@ -17,6 +18,7 @@ class CreateHabitPresenter {
     ) {
         self.interactor = interactor
         self.router = router
+        self.startDate = .now
     }
     
     func onColorPressed(color: Color) {
@@ -39,5 +41,10 @@ class CreateHabitPresenter {
         } catch {
             print("Caught error while adding habit")
         }
+    }
+    
+    func onCancelPressed() {
+        print("debugs: pressing cancel button")
+        router.dismissScreen()
     }
 }

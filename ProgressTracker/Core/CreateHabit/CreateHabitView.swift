@@ -4,38 +4,60 @@ struct CreateHabitView: View {
     @State var presenter: CreateHabitPresenter
     
     var body: some View {
-        ScrollView {
-            textFieldSection
-            colorGrid
-                .padding(.horizontal, 24)
-        }
-        .safeAreaInset(
-            edge: .bottom,
-            alignment: .center,
-            spacing: 16,
-            content: {
-                ZStack {
-                    if let selectedColor = presenter.selectedColor {
-                        ctaButton(selectedColor: selectedColor)
-                            .transition(AnyTransition.move(edge: .bottom))
-                    }
-                }
-                .padding(24)
-                .background(Color(uiColor: .systemBackground))
+        VStack(spacing: 0) {
+            ScrollView {
+                textFieldSection
+                selectStartDate
+                colorGrid
+                    .padding(.horizontal, 24)
             }
+            .animation(.bouncy, value: presenter.selectedColor)
+        }
+        .padding(.horizontal, 16)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Add", systemImage: "checkmark.circle.fill") {
+                    presenter.onAddPressed()
+                }
+            }
+            
+            ToolbarItem(placement: .principal) {
+                Text("Add new habit")
+            }
+            
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", systemImage: "xmark.circle.fill") {
+                    presenter.onCancelPressed()
+                }
+            }
+        }
+    }
+}
+
+private extension CreateHabitView {
+    var textFieldSection: some View {
+        VStack(alignment: .leading) {
+            Text("Enter habit name")
+            
+            TextField("", text: $presenter.habitNameText)
+                .keyboardType(.alphabet)
+                .autocorrectionDisabled()
+                .accessibilityIdentifier("HabitTextField")
+                .textFieldStyle(.roundedRectangleTextFieldStyle)
+        }
+    }
+    
+    var selectStartDate: some View {
+        DatePicker(
+            "Select start date",
+            selection: $presenter.startDate,
+            in: ...Date(),
+            displayedComponents: [.date]
         )
-        .animation(.bouncy, value: presenter.selectedColor)
-        .toolbar(.hidden, for: .navigationBar)
+        .datePickerStyle(.graphical)
     }
     
-    private var textFieldSection: some View {
-        TextField("Enter habit name", text: $presenter.habitNameText)
-            .keyboardType(.alphabet)
-            .autocorrectionDisabled()
-            .accessibilityIdentifier("HabitTextField")
-    }
-    
-    private var colorGrid: some View {
+    var colorGrid: some View {
         LazyVGrid(
             columns: Array(repeating: GridItem(.flexible(), spacing: 24), count: 3),
             alignment: .center,
@@ -43,14 +65,13 @@ struct CreateHabitView: View {
             pinnedViews: [.sectionHeaders],
             content: {
                 Section(content: {
-                    ForEach(presenter.profileColors, id: \.self) { color in
+                    ForEach(presenter.habitThemeColors, id: \.self) { color in
                         Circle()
-                        // TODO: Add unique accent color or think about better idea of selecting color
-//                            .fill(.accent)
+                            .fill(color)
                             .overlay(
-                                color
-                                    .clipShape(Circle())
-                                    .padding(presenter.selectedColor == color ? 10: 0)
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(.white)
+                                    .opacity(presenter.selectedColor == color ? 1: 0)
                             )
                             .onTapGesture {
                                 presenter.onColorPressed(color: color)
@@ -65,34 +86,6 @@ struct CreateHabitView: View {
                 })
             }
         )
-    }
-    
-    private func ctaButton(selectedColor: Color) -> some View {
-        Text("Continue")
-            .callToActionButton()
-            .anyButton(action: {
-                presenter.onAddPressed()
-            })
-            .accessibilityIdentifier("ContinueButton")
-    }
-}
-
-extension CoreBuilder {
-    func createHabitView(router: Router) -> some View {
-        CreateHabitView(
-            presenter: CreateHabitPresenter(
-                interactor: interactor,
-                router: CoreRouter(router: router, builder: self)
-            )
-        )
-    }
-}
-
-extension CoreRouter {
-    func showCreateHabitView() {
-        router.showScreen(.push, onDismiss: nil) { router in
-            builder.createHabitView(router: router)
-        }
     }
 }
 

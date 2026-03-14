@@ -7,29 +7,16 @@ struct CreateHabitView: View {
         VStack(spacing: 0) {
             ScrollView {
                 textFieldSection
+                selectStartDate
                 colorGrid
                     .padding(.horizontal, 24)
             }
-            .safeAreaInset(
-                edge: .bottom,
-                alignment: .center,
-                spacing: 16,
-                content: {
-                    ZStack {
-                        if let selectedColor = presenter.selectedColor {
-                            ctaButton(selectedColor: selectedColor)
-                                .transition(AnyTransition.move(edge: .bottom))
-                        }
-                    }
-                    .padding(24)
-                    .background(Color(uiColor: .systemBackground))
-                }
-            )
             .animation(.bouncy, value: presenter.selectedColor)
         }
+        .padding(.horizontal, 16)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("Add", systemImage: "checkmark") {
+                Button("Add", systemImage: "checkmark.circle.fill") {
                     presenter.onAddPressed()
                 }
             }
@@ -39,22 +26,35 @@ struct CreateHabitView: View {
             }
             
             ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel", systemImage: "xmark") {
+                Button("Cancel", systemImage: "xmark.circle.fill") {
                     presenter.onCancelPressed()
                 }
             }
         }
-//        .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
-        //        .navigationTitle("Add new habit")
     }
 }
 
 private extension CreateHabitView {
     var textFieldSection: some View {
-        TextField("Enter habit name", text: $presenter.habitNameText)
-            .keyboardType(.alphabet)
-            .autocorrectionDisabled()
-            .accessibilityIdentifier("HabitTextField")
+        VStack(alignment: .leading) {
+            Text("Enter habit name")
+            
+            TextField("", text: $presenter.habitNameText)
+                .keyboardType(.alphabet)
+                .autocorrectionDisabled()
+                .accessibilityIdentifier("HabitTextField")
+                .textFieldStyle(.roundedRectangleTextFieldStyle)
+        }
+    }
+    
+    var selectStartDate: some View {
+        DatePicker(
+            "Select start date",
+            selection: $presenter.startDate,
+            in: ...Date(),
+            displayedComponents: [.date]
+        )
+        .datePickerStyle(.graphical)
     }
     
     var colorGrid: some View {
@@ -65,14 +65,13 @@ private extension CreateHabitView {
             pinnedViews: [.sectionHeaders],
             content: {
                 Section(content: {
-                    ForEach(presenter.profileColors, id: \.self) { color in
+                    ForEach(presenter.habitThemeColors, id: \.self) { color in
                         Circle()
-                        // TODO: Add unique accent color or think about better idea of selecting color
-//                            .fill(.accent)
+                            .fill(color)
                             .overlay(
-                                color
-                                    .clipShape(Circle())
-                                    .padding(presenter.selectedColor == color ? 10: 0)
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(.white)
+                                    .opacity(presenter.selectedColor == color ? 1: 0)
                             )
                             .onTapGesture {
                                 presenter.onColorPressed(color: color)
@@ -87,15 +86,6 @@ private extension CreateHabitView {
                 })
             }
         )
-    }
-    
-    func ctaButton(selectedColor: Color) -> some View {
-        Text("Continue")
-            .callToActionButton()
-            .anyButton(action: {
-                presenter.onAddPressed()
-            })
-            .accessibilityIdentifier("ContinueButton")
     }
 }
 

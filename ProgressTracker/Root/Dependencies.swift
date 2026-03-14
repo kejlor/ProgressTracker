@@ -37,14 +37,16 @@ class DevPreview {
     
     var container: DependencyContainer {
         let container = DependencyContainer()
-        container.register(LocalHabitPersistence.self, service: localHabitService)
-        
+        container.register(HabitManager.self, service: habitManager)
+        container.register(HabitCompletionManager.self, service: habitCompletionManager)
         return container
     }
     
-    let localHabitService: MockLocalHabitPersistence
+    let habitManager: HabitManager
+    let habitCompletionManager: HabitCompletionManager
     
     init() {
-        self.localHabitService = MockLocalHabitPersistence()
+        self.habitManager = HabitManager(local: MockLocalHabitPersistence())
+        self.habitCompletionManager = HabitCompletionManager(local: MockLocalHabitCompletionPersistence())
     }
 }

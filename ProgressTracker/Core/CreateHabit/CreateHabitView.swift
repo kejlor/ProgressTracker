@@ -16,25 +16,37 @@ struct CreateHabitView: View {
         .padding(.horizontal, 16)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("Add", systemImage: "checkmark.circle.fill") {
-                    presenter.onAddPressed()
-                }
+                addButton
             }
             
             ToolbarItem(placement: .principal) {
-                Text("Add new habit")
+                screenTitle
             }
             
             ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel", systemImage: "xmark.circle.fill") {
-                    presenter.onCancelPressed()
-                }
+                cancelButton
             }
         }
     }
 }
 
 private extension CreateHabitView {
+    var addButton: some View {
+        Button("Add", systemImage: "checkmark.circle.fill") {
+            presenter.onAddPressed()
+        }
+    }
+    
+    var screenTitle: some View {
+        Text("Add new habit")
+    }
+    
+    var cancelButton: some View {
+        Button("Cancel", systemImage: "xmark.circle.fill") {
+            presenter.onCancelPressed()
+        }
+    }
+    
     var textFieldSection: some View {
         VStack(alignment: .leading) {
             Text("Enter habit name")

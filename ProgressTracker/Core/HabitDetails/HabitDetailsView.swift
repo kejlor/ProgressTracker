@@ -6,38 +6,53 @@ struct HabitDetailsView: View {
     var body: some View {
         VStack(spacing: 0) {
             editHabitNameSection
-            deleteHabitButton
             previousDates
-            updateHabitButton
+        }
+        .padding(.horizontal, 16)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                screenTitle
+            }
+            
+            ToolbarItem(placement: .destructiveAction) {
+                deleteButton
+            }
+            
+            ToolbarItem(placement: .confirmationAction) {
+                updateButton
+            }
         }
     }
 }
 
 private extension HabitDetailsView {
+    var updateButton: some View {
+        Button("Update", systemImage: "checkmark.circle.fill") {
+            presenter.onUpdatePressed()
+        }
+    }
+    
+    var screenTitle: some View {
+        Text("Details view")
+    }
+    
+    var deleteButton: some View {
+        Button("Delete", systemImage: "trash") {
+            presenter.onDeletePressed()
+        }
+        .tint(.red)
+    }
+    
     private var editHabitNameSection: some View {
-        VStack(spacing: 0) {
-            Text("Edit habit name")
+        VStack(alignment: .leading) {
+            Text("Habit name")
             TextField("Enter habit name", text: $presenter.habitNameText)
                 .keyboardType(.alphabet)
                 .autocorrectionDisabled()
                 .accessibilityIdentifier("HabitTextField")
+                .textFieldStyle(.roundedRectangleTextFieldStyle)
         }
-    }
-    
-    private var updateHabitButton: some View {
-        Button {
-            presenter.onUpdatePressed()
-        } label: {
-            Text("Update habit")
-        }
-    }
-    
-    private var deleteHabitButton: some View {
-        Button {
-            presenter.onDeletePressed()
-        } label: {
-            Text("Delete habit")
-        }
+        .padding(.bottom, 8)
     }
     
     private func dateListView(date: Date) -> some View {
@@ -55,10 +70,16 @@ private extension HabitDetailsView {
     }
     
     private var previousDates: some View {
-        List {
-            ForEach(presenter.previousDates, id: \.self) { previousDate in
-                dateListView(date: previousDate)
+        VStack(alignment: .leading) {
+            Text("Previous dates")
+            
+            List {
+                ForEach(presenter.previousDates, id: \.self) { previousDate in
+                    dateListView(date: previousDate)
+                }
             }
+            .ignoresSafeArea()
+            .listStyle(PlainListStyle())
         }
     }
 }

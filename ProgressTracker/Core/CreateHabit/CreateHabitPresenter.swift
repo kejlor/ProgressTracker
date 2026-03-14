@@ -32,7 +32,8 @@ class CreateHabitPresenter {
             id: UUID(),
             habitColorHex: selectedColor.asHex(),
             days: 0,
-            name: habitNameText
+            name: habitNameText,
+            startDate: startDate
         )
         
         do {

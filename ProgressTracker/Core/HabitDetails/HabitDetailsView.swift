@@ -58,11 +58,6 @@ private extension HabitDetailsView {
         List {
             ForEach(presenter.previousDates, id: \.self) { previousDate in
                 dateListView(date: previousDate)
-                    .onAppear {
-                        if presenter.isLastDate(date: previousDate) {
-                            presenter.loadPreviousDates()
-                        }
-                    }
             }
         }
     }

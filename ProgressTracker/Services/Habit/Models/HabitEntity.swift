@@ -14,14 +14,14 @@ final class HabitEntity {
     var habitColorHex: String
     var days: Int
     var name: String
-    var dateAdded: Date
+    var startDate: Date
     
     init(from model: HabitModel) {
         self.id = model.id
         self.habitColorHex = model.habitColorHex
         self.days = model.days
         self.name = model.name
-        self.dateAdded = .now
+        self.startDate = model.startDate
     }
     
     func toModel() -> HabitModel {
@@ -29,7 +29,8 @@ final class HabitEntity {
             id: id,
             habitColorHex: habitColorHex,
             days: days,
-            name: name
+            name: name,
+            startDate: startDate
         )
     }
 }

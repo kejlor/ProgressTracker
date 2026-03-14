@@ -24,7 +24,7 @@ struct SwiftDataLocalHabitPersistence: LocalHabitPersistence {
     }
     
     func getHabits() throws -> [HabitModel] {
-        let descriptor = FetchDescriptor<HabitEntity>(sortBy: [SortDescriptor(\.dateAdded, order: .reverse)])
+        let descriptor = FetchDescriptor<HabitEntity>(sortBy: [SortDescriptor(\.startDate, order: .reverse)])
         let entities = try mainContext.fetch(descriptor)
         return entities.map({ $0.toModel() })
     }

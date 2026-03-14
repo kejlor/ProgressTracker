@@ -37,7 +37,7 @@ class HabitDetailsPresenter {
         
         self.currentHabitColor = habit.habitColorCalculated
         self.habitNameText = habit.name
-        self.habitDateCrreated = habit.dateCreated
+        self.habitDateCrreated = habit.startDate
         self.selectedColor = habit.habitColorCalculated
         
         fetchHabitCompletions()
@@ -129,35 +129,18 @@ class HabitDetailsPresenter {
         dateFormatter.string(from: date)
     }
     
-    func loadPreviousDates() {
-        let startDate = calendar.date(
-            byAdding: .day,
-            value: -currentOffset,
-            to: Date()
-        ) ?? Date()
+    private func loadPreviousDates() {
+        var currentDate = Date.now
         
-        let newDates = generatePreviousDates(
-            from: startDate,
-            count: 30
-        )
-        
-        previousDates.append(contentsOf: newDates)
-        currentOffset += 30
-    }
-    
-    func isLastDate(date: Date) -> Bool {
-        previousDates.last == date
-    }
-    
-    private func generatePreviousDates(from startDate: Date, count: Int) -> [Date] {
-        var dates: [Date] = []
-        
-        for dayOffset in 0..<count {
-            if let date = calendar.date(byAdding: .day, value: -dayOffset, to: startDate) {
-                dates.append(date)
+        while currentDate >= habit.startDate {
+            previousDates.append(currentDate)
+            
+            guard let previousDate = calendar.date(byAdding: .day, value: -1, to: currentDate) else {
+                break
             }
+            
+            currentDate = previousDate
         }
-        return dates
     }
 }
 

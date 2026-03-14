@@ -12,20 +12,20 @@ struct HabitModel: Hashable, Codable {
     var habitColorHex: String
     var days: Int
     var name: String
-    let dateCreated: Date?
+    let startDate: Date
     
     init(
         id: UUID,
         habitColorHex: String,
         days: Int,
         name: String,
-        dateCreated: Date? = nil
+        startDate: Date
     ) {
         self.id = id
         self.habitColorHex = habitColorHex
         self.days = days
         self.name = name
-        self.dateCreated = dateCreated
+        self.startDate = startDate
     }
     
     var habitColorCalculated: Color {
@@ -43,14 +43,15 @@ struct HabitModel: Hashable, Codable {
     static func newHabit(
         habitColorHex: String,
         days: Int,
-        name: String
+        name: String,
+        startDate: Date
     ) -> Self {
         HabitModel(
             id: UUID(),
             habitColorHex: habitColorHex,
             days: days,
             name: name,
-            dateCreated: .now
+            startDate: startDate
         )
     }
     
@@ -65,21 +66,21 @@ struct HabitModel: Hashable, Codable {
                 habitColorHex: "#87CEEB",
                 days: 123,
                 name: "Drawing",
-                dateCreated: .now
+                startDate: Date(timeInterval: -604800, since: .now)
             ),
             HabitModel(
                 id: UUID(),
                 habitColorHex: "#EE4B2B",
                 days: 456,
                 name: "Programming",
-                dateCreated: .now
+                startDate: .now
             ),
             HabitModel(
                 id: UUID(),
                 habitColorHex: "#228B22",
                 days: 789,
                 name: "Gym",
-                dateCreated: .now
+                startDate: .now
             )
         ]
     }

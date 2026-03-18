@@ -13,4 +13,5 @@ protocol LocalHabitCompletionPersistence {
     func getAllHabitCompletions() throws -> [HabitCompletionModel]
     func getHabitCompletions(habit: HabitModel) throws -> [HabitCompletionModel]
     func deleteHabitCompletion(habit: HabitModel, date: Date) throws
+    func deleteAllHabitCompletions() throws
 }

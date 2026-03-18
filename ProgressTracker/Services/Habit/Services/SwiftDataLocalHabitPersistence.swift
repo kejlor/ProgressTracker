@@ -51,6 +51,10 @@ struct SwiftDataLocalHabitPersistence: LocalHabitPersistence {
         try mainContext.save()
     }
     
+    func deleteAllHabits() throws {
+        try mainContext.delete(model: HabitEntity.self)
+    }
+    
     private func insertHabit(habit: HabitModel) throws {
         let entity = HabitEntity(from: habit)
         mainContext.insert(entity)

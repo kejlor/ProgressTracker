@@ -31,4 +31,8 @@ class HabitCompletionManager {
     func deleteHabitCompletion(habit: HabitModel, date: Date) throws {
         try local.deleteHabitCompletion(habit: habit, date: date)
     }
+    
+    func deleteAllHabitCompletions() throws {
+        try local.deleteAllHabitCompletions()
+    }
 }

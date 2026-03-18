@@ -26,6 +26,10 @@ struct CoreInteractor {
         try habitManager.updateHabit(habit: habit)
     }
     
+    func deleteAllHabits() throws {
+        try habitManager.deleteAllHabits()
+    }
+    
     func addHabitToCompletions(habit: HabitModel, date: Date) throws {
         try habitCompletionManager.addHabitToCompletions(habit: habit, date: date)
     }
@@ -40,5 +44,9 @@ struct CoreInteractor {
     
     func deleteHabitCompletion(habit: HabitModel, date: Date) throws {
         try habitCompletionManager.deleteHabitCompletion(habit: habit, date: date)
+    }
+    
+    func deleteAllHabitCompletions() throws {
+        try habitCompletionManager.deleteAllHabitCompletions()
     }
 }

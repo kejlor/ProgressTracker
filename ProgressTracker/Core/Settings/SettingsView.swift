@@ -6,9 +6,9 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             Button {
-                // TODO: Add logic
+                presenter.onDeleteAllHabitsDataButtonPressed()
             } label: {
-                Text("Delete all habits")
+                Text("Delete all habits data")
             }
         }
     }

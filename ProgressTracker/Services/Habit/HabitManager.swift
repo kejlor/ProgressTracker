@@ -31,4 +31,8 @@ class HabitManager {
     func updateHabit(habit: HabitModel) throws {
         try local.updateHabit(habit: habit)
     }
+    
+    func deleteAllHabits() throws {
+        try local.deleteAllHabits()
+    }
 }

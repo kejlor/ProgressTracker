@@ -60,4 +60,8 @@ struct SwiftDataLocalHabitCompletionPersistence: LocalHabitCompletionPersistence
             try mainContext.save()
         }
     }
+    
+    func deleteAllHabitCompletions() throws {
+        try mainContext.delete(model: HabitCompletionEntity.self)
+    }
 }

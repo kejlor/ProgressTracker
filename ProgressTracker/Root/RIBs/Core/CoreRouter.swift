@@ -44,4 +44,28 @@ struct CoreRouter: GlobalRouter {
             builder.statisticsView(router: router)
         }
     }
+    
+    // MARK: Modals
+    func showDeleteAllHabitsAndCompletionsModal(
+        onConfirmPressed: @escaping () -> Void,
+        onCancelPressed: @escaping () -> Void
+    ) {
+        router.showModal(
+            transition: .move(edge: .bottom),
+            backgroundColor: .black.opacity(0.5),
+            destination: {
+                CustomModalView(
+                    title: "Delete all data related to habits and their completions.",
+                    subtitle: "This action cannot be undone.",
+                    primaryButtonTitle: "Confirm",
+                    primaryButtonAction: onConfirmPressed,
+                    secondaryButtonTitle: "Cancel",
+                    secondaryButtonAction: onCancelPressed
+                )
+        })
+    }
+    
+    func dismissModal() {
+        router.dismissModal()
+    }
 }

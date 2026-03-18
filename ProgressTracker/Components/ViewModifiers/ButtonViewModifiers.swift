@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum ButtonStyleOption {
-    case plain
+    case plain, press
 }
 
 extension View {
@@ -17,7 +17,12 @@ extension View {
         _ option: ButtonStyleOption = .plain,
         action: @escaping () -> Void
     ) -> some View {
-        self.plainButton(action: action)
+        switch option {
+        case .plain:
+            self.plainButton(action: action)
+        case .press:
+            self.pressableButton(action: action)
+        }
     }
     
     private func plainButton(action: @escaping () -> Void) -> some View {
@@ -27,5 +32,22 @@ extension View {
             self
         }
         .buttonStyle(PlainButtonStyle())
+    }
+    
+    private func pressableButton(action: @escaping () -> Void) -> some View {
+        Button {
+            action()
+        } label: {
+            self
+        }
+        .buttonStyle(PressableButtonStyle())
+    }
+}
+
+private struct PressableButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1)
+            .animation(.smooth, value: configuration.isPressed)
     }
 }

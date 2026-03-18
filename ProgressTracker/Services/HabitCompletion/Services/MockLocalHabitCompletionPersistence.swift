@@ -23,4 +23,8 @@ struct MockLocalHabitCompletionPersistence: LocalHabitCompletionPersistence {
     func deleteHabitCompletion(habit: HabitModel, date: Date) throws {
         
     }
+    
+    func deleteAllHabitCompletions() throws {
+        
+    }
 }

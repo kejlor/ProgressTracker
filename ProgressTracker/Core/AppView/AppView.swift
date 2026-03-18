@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct AppView<TabBarView: View>: View {
+    @AppStorage("appTheme") private var isDarkModeOn = true
     @State var presenter: AppPresenter
     @ViewBuilder var tabBarView: () -> TabBarView
     
@@ -23,6 +24,7 @@ struct AppView<TabBarView: View>: View {
                 )
             }
         )
+        .preferredColorScheme(isDarkModeOn ? .dark : .light)
     }
 }
 

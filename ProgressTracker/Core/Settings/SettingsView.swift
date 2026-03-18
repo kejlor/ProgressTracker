@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("appTheme") private var isDarkModeOn = true
     @State var presenter: SettingsPresenter
     
     var body: some View {
@@ -10,6 +11,9 @@ struct SettingsView: View {
             } label: {
                 Text("Delete all habits data")
             }
+            
+            Toggle("Dark Mode", isOn: $isDarkModeOn)
+                .padding()
         }
     }
 }

@@ -45,12 +45,9 @@ private extension HabitsView {
         Button {
             presenter.onAddHabitPressed(onDisappear: { presenter.getHabits() })
         } label: {
-            VStack(spacing: 0) {
-                Image(systemName: "plus.square.fill")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                Text("Add")
-            }
+            Image(systemName: "plus.square.fill")
+                .resizable()
+                .frame(width: 25, height: 25)
         }
     }
 }

@@ -71,10 +71,8 @@ private extension HabitView {
     }
     
     private var currentWeekProgressSection: some View {
-        let weekDays = Date.currentWeekDates
-        
         return HStack {
-            ForEach(weekDays, id: \.self) { date in
+            ForEach(presenter.weekDays, id: \.self) { date in
                 dayOfTheWeek(date: date)
             }
         }

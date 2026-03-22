@@ -8,8 +8,11 @@ class HabitPresenter {
     private let calendar: Calendar
     private let dateFormatter: DateFormatter
     
+    let weekDays = Date.currentWeekDates
+    
     private(set) var habit: HabitModel
     private(set) var habitCompletions: [HabitCompletionModel] = []
+    
     
     init(
         interactor: HabitInteractor,
